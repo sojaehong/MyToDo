@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My TO-DO</string>
+    <string name="app_name">내 할일</string>
     <string name="ad_application_id_sample">ca-app-pub-3940256099942544~3347511713</string>
     <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="reward_ad_unit_id_test">ca-app-pub-3940256099942544/5224354917</string>
