@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static int tabPosition = 0;
 
     private ViewPager viewPager;
-    private FloatingActionButton addBtn;
+//    private FloatingActionButton addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getDeviceSize();
         setViewPager();
         setTabLayout();
-        setAddBtn();
+//        setAddBtn();
     }
 
-    private void setAddBtn() {
-        addBtn = findViewById(R.id.add_button);
-        addBtn.setOnClickListener(this);
-    }
+//    private void setAddBtn() {
+//        addBtn = findViewById(R.id.add_button);
+//        addBtn.setOnClickListener(this);
+//    }
 
     private void setTabLayout() {
         TabLayout tabLayout = findViewById(R.id.main_tab_layout);
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 tabPosition = tab.getPosition();
-                addBtnHideShowCheck();
+//                addBtnHideShowCheck();
             }
 
             @Override
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setViewPager() {
         viewPager = findViewById(R.id.main_viewpager);
-        MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager());
+        MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(adapter);
     }
 
@@ -78,21 +78,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deviceHeight = deviceSize[1];
     }
 
-    private void addBtnHideShowCheck(){
-        if (tabPosition == 4) {
-            onAddBtnHide();
-        }else{
-            onAddBtnShow();
-        }
-    }
+//    private void addBtnHideShowCheck(){
+//        if (tabPosition == 4) {
+//            onAddBtnHide();
+//        }else{
+//            onAddBtnShow();
+//        }
+//    }
 
-    private void onAddBtnHide(){
-        addBtn.hide();
-    }
-
-    private void onAddBtnShow(){
-        addBtn.show();
-    }
+//    private void onAddBtnHide(){
+//        addBtn.hide();
+//    }
+//
+//    private void onAddBtnShow(){
+//        addBtn.show();
+//    }
 
     @Override
     public void onClick(View view) {

@@ -12,4 +12,5 @@
     app:fabSize="auto"
     app:maxImageSize="35dp"
     app:srcCompat="@drawable/ic_add_white_24dp"
+    app:tint="@color/white"
     tools:ignore="VectorDrawableCompat" />

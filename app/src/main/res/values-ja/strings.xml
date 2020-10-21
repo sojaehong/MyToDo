@@ -4,4 +4,9 @@
     <string name="ad_application_id_sample">ca-app-pub-3940256099942544~3347511713</string>
     <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="reward_ad_unit_id_test">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="type_select_q">期間選択</string>
+    <string name="today">今日</string>
+    <string name="this_week">今週</string>
+    <string name="this_month">今月</string>
+    <string name="this_year">今年</string>
 </resources>

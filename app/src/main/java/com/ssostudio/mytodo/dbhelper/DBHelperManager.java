@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteStatement;
 import androidx.annotation.Nullable;
 
 import com.ssostudio.mytodo.MainActivity;
+import com.ssostudio.mytodo.model.ToDoModel;
 
 public class DBHelperManager extends SQLiteOpenHelper {
 
@@ -33,7 +34,7 @@ public class DBHelperManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    private void createTodoTable(SQLiteDatabase db){
+    private void createTodoTable(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE todo (doto_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "todo_title TEXT," +
                 "todo_max_count INTEGER," +
@@ -46,7 +47,36 @@ public class DBHelperManager extends SQLiteOpenHelper {
                 ")");
     }
 
-    private void dropTodoTable(SQLiteDatabase db){
+    private void dropTodoTable(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS todo");
+    }
+
+    public void onToDoAdd(ToDoModel toDoModel) {
+        try {
+
+            _db = getWritableDatabase();
+
+            String sql = "INSERT INTO todo (todo_title, todo_max_count, todo_now_count, " +
+                    "last_update_date, add_date, todo_type, todo_tag" +
+                    ") VALUES (?,?,?,?,?,?,?)";
+
+            _statement = _db.compileStatement(sql);
+
+            _statement.bindString(1, toDoModel.getTodo_title());
+            _statement.bindLong(2, toDoModel.getTodo_max_count());
+            _statement.bindLong(3, 0);
+            _statement.bindLong(4, toDoModel.getLast_update_date());
+            _statement.bindLong(5, toDoModel.getAdd_date());
+            _statement.bindLong(6, toDoModel.getTodo_type());
+            _statement.bindString(7, toDoModel.getTodo_tag());
+
+            _statement.execute();
+
+            _statement.close();
+            _db.close();
+
+        } catch (Exception e) {
+
+        }
     }
 }

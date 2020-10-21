@@ -1,12 +1,14 @@
 package com.ssostudio.mytodo.adapter;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.ssostudio.mytodo.fragment.BucketListFragment;
+import com.ssostudio.mytodo.R;
 import com.ssostudio.mytodo.fragment.MonthlyFragment;
 import com.ssostudio.mytodo.fragment.SettingFragment;
 import com.ssostudio.mytodo.fragment.TodayFragment;
@@ -14,12 +16,12 @@ import com.ssostudio.mytodo.fragment.WeeklyFragment;
 import com.ssostudio.mytodo.fragment.YearsFragment;
 
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
+    private Context _context;
 
-    public MainViewPagerAdapter(@NonNull FragmentManager fm) {
+    public MainViewPagerAdapter(@NonNull FragmentManager fm, Context context) {
         super(fm);
+        _context = context;
     }
-
-    public String[] itemTitle = {"오늘", "주간", "월간", "연간", "설정"};
 
     @NonNull
     @Override
@@ -43,12 +45,26 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return itemTitle.length;
+        return 5;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return itemTitle[position];
+        switch (position) {
+            case 0:
+                return _context.getString(R.string.today);
+            case 1:
+                return _context.getString(R.string.this_week);
+            case 2:
+                return _context.getString(R.string.this_month);
+            case 3:
+                return _context.getString(R.string.this_year);
+            case 4:
+                return "설정";
+
+        }
+        return super.getPageTitle(position);
     }
+
 }
