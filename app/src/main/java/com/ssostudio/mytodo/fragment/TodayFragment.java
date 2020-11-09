@@ -48,6 +48,6 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onAddButtonClick() {
-        new ToDoAddDialog(_context).onShowDialog();
+        new ToDoAddDialog(_context).onShowDialog(0);
     }
 }
