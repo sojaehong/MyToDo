@@ -5,9 +5,11 @@ import android.content.Context;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.ssostudio.mytodo.R;
 import com.ssostudio.mytodo.model.ToDoModel;
 
@@ -19,6 +21,7 @@ public class ToDoAddDialog implements View.OnClickListener {
     private int _type;
     private TextView titleTextVIew;
     private MaterialButton cancelBtn, countEditBtn, okBtn;
+    private TextInputEditText todoText;
 
     public ToDoAddDialog(Context context){
         _context = context;
@@ -43,6 +46,17 @@ public class ToDoAddDialog implements View.OnClickListener {
 
         okBtn = _dialog.findViewById(R.id.ok_button);
         okBtn.setOnClickListener(this);
+
+        todoText = _dialog.findViewById(R.id.to_do_text);
+        todoText.post(new Runnable() {
+            @Override
+            public void run() {
+                todoText.setFocusableInTouchMode(true);
+                todoText.requestFocus();
+                InputMethodManager imm = (InputMethodManager)_context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(todoText, 0);
+            }
+        });
 
         countEditBtn = _dialog.findViewById(R.id.count_edit_button);
         countEditBtn.setOnClickListener(this);

@@ -10,4 +10,7 @@
     <string name="this_month">이번달</string>
     <string name="this_year">이번년도</string>
     <string name="todo">할일</string>
+    <string name="cancel">취소</string>
+    <string name="add">추가</string>
+    <string name="count_edit">카운트 설정</string>
 </resources>

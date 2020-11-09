@@ -19,8 +19,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:gravity="center"
-                android:text="먼디"
-                android:textColor="@color/black"
                 android:textSize="20dp" />
 
         </LinearLayout>
@@ -43,6 +41,8 @@
                     android:id="@+id/to_do_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:textSize="20dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -61,7 +61,7 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="취소"
+                android:text="@string/cancel"
                 android:textColor="@color/red"
                 android:textSize="18dp" />
 
@@ -70,8 +70,7 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="카운트 설정"
-                android:textColor="@color/green"
+                android:text="@string/count_edit"
                 android:textSize="18dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -79,7 +78,7 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="확인"
+                android:text="@string/add"
                 android:textColor="@color/blue"
                 android:textSize="18dp" />
 
