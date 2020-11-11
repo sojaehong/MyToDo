@@ -1,14 +1,20 @@
 package com.ssostudio.mytodo.dbhelper;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import com.ssostudio.mytodo.MainActivity;
 import com.ssostudio.mytodo.model.ToDoModel;
+import com.ssostudio.mytodo.model.ToDoModelList;
+import com.ssostudio.mytodo.utility.DateManager;
+
+import java.util.ArrayList;
 
 public class DBHelperManager extends SQLiteOpenHelper {
 
@@ -19,7 +25,7 @@ public class DBHelperManager extends SQLiteOpenHelper {
     private static Context _context;
 
     public DBHelperManager(@Nullable Context context) {
-        super(context, DB_FULL_PATH, null, 0);
+        super(context, DB_FULL_PATH, null, 1);
         _context = context;
     }
 
@@ -76,7 +82,47 @@ public class DBHelperManager extends SQLiteOpenHelper {
             _db.close();
 
         } catch (Exception e) {
-
+            Log.d("today" , "add Error " + e.getMessage());
         }
+    }
+
+    public ArrayList<ToDoModel> onTodayToDoSelect(){
+
+        ArrayList<ToDoModel> list = new ArrayList<>();
+
+        try{
+
+            _db = getReadableDatabase();
+
+            long todayStart = DateManager.dayStartTimestamp(DateManager.getTimestamp());
+            long todayEnd = DateManager.dayEndTimestamp(DateManager.getTimestamp());
+
+            String sql = "SELECT * FROM todo WHERE todo_type = 0 AND add_date BETWEEN " + todayStart +" AND " + todayEnd ;
+
+            Cursor cursor = _db.rawQuery(sql, null);
+
+            while (cursor.moveToNext()) {
+                ToDoModel toDoModel = new ToDoModel();
+                toDoModel.setTodo_id(cursor.getLong(0));
+                toDoModel.setTodo_title(cursor.getString(1));
+                toDoModel.setTodo_max_count(cursor.getLong(2));
+                toDoModel.setTodo_now_count(cursor.getLong(3));
+                toDoModel.setLast_update_date(cursor.getLong(4));
+                toDoModel.setAdd_date(cursor.getLong(5));
+                toDoModel.setTodo_type(cursor.getInt(6));
+                toDoModel.setTodo_tag(cursor.getString(7));
+                toDoModel.setTodo_note(cursor.getString(8));
+                list.add(toDoModel);
+            }
+
+            _db.close();
+
+            return list;
+
+        }catch (Exception e){
+            Log.d("today" , "select Error");
+        }
+
+        return list;
     }
 }

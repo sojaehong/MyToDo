@@ -52,6 +52,64 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:hint="count">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/count_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:text="1"
+                    android:textSize="20dp"
+                    app:textInputLayoutFocusedRectEnabled="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sub_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:textColor="@color/red"
+                    android:textSize="25dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/plus_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:text="+"
+                    android:textColor="@color/blue"
+                    android:textSize="25dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:gravity="right"
             android:orientation="horizontal">
@@ -63,14 +121,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/cancel"
                 android:textColor="@color/red"
-                android:textSize="18dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/count_edit_button"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/count_edit"
                 android:textSize="18dp" />
 
             <com.google.android.material.button.MaterialButton

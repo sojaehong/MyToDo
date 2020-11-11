@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/list_view_item"/>
+    <include layout="@layout/list_view_layout"/>
 
     <include layout="@layout/to_do_add_button"/>
 

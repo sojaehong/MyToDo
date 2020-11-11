@@ -2,26 +2,29 @@ package com.ssostudio.mytodo.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ssostudio.mytodo.R;
+import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.model.ToDoModel;
 
 public class ToDoAddDialog implements View.OnClickListener {
 
     private Context _context;
-    private ToDoModel _toDoModel;
+    private ToDoModel _toDoModel = new ToDoModel();
     private Dialog _dialog;
     private int _type;
     private TextView titleTextVIew;
-    private MaterialButton cancelBtn, countEditBtn, okBtn;
-    private TextInputEditText todoText;
+    private MaterialButton cancelBtn, okBtn, plusBtn, subBtn;
+    private TextInputEditText todoText, countText;
 
     public ToDoAddDialog(Context context){
         _context = context;
@@ -47,6 +50,12 @@ public class ToDoAddDialog implements View.OnClickListener {
         okBtn = _dialog.findViewById(R.id.ok_button);
         okBtn.setOnClickListener(this);
 
+        plusBtn = _dialog.findViewById(R.id.plus_button);
+        plusBtn.setOnClickListener(this);
+
+        subBtn = _dialog.findViewById(R.id.sub_button);
+        subBtn.setOnClickListener(this);
+
         todoText = _dialog.findViewById(R.id.to_do_text);
         todoText.post(new Runnable() {
             @Override
@@ -58,8 +67,7 @@ public class ToDoAddDialog implements View.OnClickListener {
             }
         });
 
-        countEditBtn = _dialog.findViewById(R.id.count_edit_button);
-        countEditBtn.setOnClickListener(this);
+        countText = _dialog.findViewById(R.id.count_text);
 
         _dialog.show();
 
@@ -103,8 +111,11 @@ public class ToDoAddDialog implements View.OnClickListener {
             case R.id.ok_button:
                 onClickOkBtn();
                 break;
-            case R.id.count_edit_button:
-                onClickCountEditBtn();
+            case R.id.plus_button:
+                onClickPlusBtn();
+                break;
+            case R.id.sub_button:
+                onClickSubBtn();
                 break;
         }
     }
@@ -115,9 +126,50 @@ public class ToDoAddDialog implements View.OnClickListener {
 
     private void onClickOkBtn(){
 
+        String todo = todoText.getText().toString();
+        String countString = countText.getText().toString();
+        int count = 0;
+
+        if (!countString.equals("")){
+            count = Integer.parseInt(countString);
+        }
+
+        if (todo.equals("")){
+            Toast.makeText(_context, "할일을 입력해주세요", Toast.LENGTH_SHORT).show();
+
+        }else if(count < 1){
+            Toast.makeText(_context, "카운트는 최소 1입니다", Toast.LENGTH_SHORT).show();
+        }else{
+            addTodo(todo, count);
+            _dialog.dismiss();
+        }
+
     }
 
-    private void onClickCountEditBtn(){
+    private void addTodo(String todo, int count){
+        _toDoModel.setTodo_title(todo);
+        _toDoModel.setTodo_max_count(count);
+        _toDoModel.setTodo_type(_type);
+        new DBManager(_context).addTodoDB(_toDoModel);
+    }
 
+    private void onClickPlusBtn(){
+        int count = Integer.parseInt(countText.getText().toString());
+
+        if (count < 999){
+            count += 1;
+
+            countText.setText(""+count);
+        }
+    }
+
+    private void onClickSubBtn(){
+        int count = Integer.parseInt(countText.getText().toString());
+
+        if (count > 1){
+            count -= 1;
+
+            countText.setText(""+count);
+        }
     }
 }

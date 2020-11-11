@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import com.ssostudio.mytodo.R;
 import com.ssostudio.mytodo.model.ToDoModel;
 
+//사용안함
 public class TypeSelectDialog implements View.OnClickListener {
 
     private Context _context;

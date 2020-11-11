@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ssostudio.mytodo.R;
+import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.dialog.ToDoAddDialog;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
@@ -31,6 +32,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         _context = getContext();
 
         setAddBtn();
+
+        new DBManager(_context).selectTodayTodo();
     }
 
     private void setAddBtn() {
