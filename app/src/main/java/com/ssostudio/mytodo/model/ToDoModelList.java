@@ -1,10 +1,12 @@
 package com.ssostudio.mytodo.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ToDoModelList {
-    public static ArrayList<ToDoModel> todayToDoModels = new ArrayList<>();
-    public static ArrayList<ToDoModel> weekToDoModels = new ArrayList<>();
-    public static ArrayList<ToDoModel> monthToDoModels = new ArrayList<>();
-    public static ArrayList<ToDoModel> yearsToDoModels = new ArrayList<>();
+    public static Map<String,ArrayList<ToDoModel>> todayToDoModels = new HashMap<>();
+    public static Map<String,ArrayList<ToDoModel>> weekToDoModels = new HashMap<>();
+    public static Map<String,ArrayList<ToDoModel>> monthToDoModels = new HashMap<>();
+    public static Map<String,ArrayList<ToDoModel>> yearsToDoModels = new HashMap<>();
 }

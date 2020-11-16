@@ -8,14 +8,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <ImageView
             android:id="@+id/count_down_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:textSize="25dp"
-            android:text="-" />
+            android:src="@drawable/ic_remove_red_100dp"
+            />
 
         <TextView
             android:id="@+id/to_do_title_text_view"
@@ -24,14 +23,13 @@
             android:textSize="25dp"
             android:layout_weight="7" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <ImageView
             android:id="@+id/count_up_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:textSize="25dp"
-            android:text="+"/>
+            android:src="@drawable/ic_add_blue_100dp"
+            />
 
     </LinearLayout>
 
