@@ -9,11 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.ssostudio.mytodo.R;
-import com.ssostudio.mytodo.fragment.MonthlyFragment;
 import com.ssostudio.mytodo.fragment.SettingFragment;
 import com.ssostudio.mytodo.fragment.TodayFragment;
-import com.ssostudio.mytodo.fragment.WeeklyFragment;
-import com.ssostudio.mytodo.fragment.YearsFragment;
+import com.ssostudio.mytodo.fragment.CalendarFragment;
 
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
     private Context _context;
@@ -31,12 +29,8 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new TodayFragment();
             case 1:
-                return new WeeklyFragment();
+                return new CalendarFragment();
             case 2:
-                return new MonthlyFragment();
-            case 3:
-                return new YearsFragment();
-            case 4:
                 return new SettingFragment();
         }
 
@@ -45,7 +39,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 3;
     }
 
     @Nullable
@@ -55,12 +49,8 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return _context.getString(R.string.today);
             case 1:
-                return _context.getString(R.string.this_week);
+                return "달력";
             case 2:
-                return _context.getString(R.string.this_month);
-            case 3:
-                return _context.getString(R.string.this_year);
-            case 4:
                 return "설정";
 
         }

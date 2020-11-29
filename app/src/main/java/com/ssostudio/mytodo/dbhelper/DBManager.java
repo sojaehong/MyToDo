@@ -1,8 +1,11 @@
 package com.ssostudio.mytodo.dbhelper;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.ssostudio.mytodo.MainActivity;
+import com.ssostudio.mytodo.fragment.TodayFragment;
 import com.ssostudio.mytodo.model.ToDoModel;
 import com.ssostudio.mytodo.model.ToDoModelList;
 import com.ssostudio.mytodo.todo.ToDoDataManager;
@@ -25,11 +28,17 @@ public class DBManager {
         toDoModel.setLast_update_date(DateManager.getTimestamp());
         toDoModel.setTodo_tag("");
         _db.onToDoAdd(toDoModel);
+
+        switch (toDoModel.getTodo_type()){
+            case 0:
+                new TodayFragment().listVIewRefresh();
+                break;
+        }
     }
 
     public void selectTodayTodo(){
         ArrayList<ToDoModel> list = _db.onTodayToDoSelect();
-        ToDoModelList.todayToDoModels = new ToDoDataManager().toDoCompletedSort(list);
+        ToDoModelList.todayToDoModels = new ToDoDataManager().toDoCompletedSortToMap(list);
 
 //        for (ToDoModel toDoModel : ToDoModelList.todayToDoModels) {
 //                Log.d("today", ""

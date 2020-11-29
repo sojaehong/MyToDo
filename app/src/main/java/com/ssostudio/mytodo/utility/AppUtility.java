@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Vibrator;
 import android.util.DisplayMetrics;
 
 public class AppUtility {
@@ -23,6 +24,12 @@ public class AppUtility {
         Intent mainIntent = Intent.makeRestartActivityTask(componentName);
         context.startActivity(mainIntent);
         System.exit(0);
+    }
+
+    public static void onVibrator(Context context, long milliSecond){
+        Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+
+        vibrator.vibrate(milliSecond);
     }
 
 }
