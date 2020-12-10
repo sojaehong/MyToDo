@@ -1,5 +1,7 @@
 package com.ssostudio.mytodo.utility;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,6 +17,16 @@ public class DateManager {
         long timestamp = date.getTime();
 
         return timestamp;
+    }
+
+    public static int[] calendarDayToIntArray(CalendarDay date){
+        int year = date.getYear();
+        int month = date.getMonth() + 1;
+        int day = date.getDay();
+
+        int[] dates = {year, month, day};
+
+        return dates;
     }
 
     public static String dateTimeZoneFormat(int[] date){
@@ -103,6 +115,17 @@ public class DateManager {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, freeDay);
 
+        Date date = calendar.getTime();
+        long timestamp = date.getTime();
+
+        return timestamp;
+    }
+
+    public static long changeDate(int[] dates, int changeDate){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(dates[0], dates[1] - 1, dates[2]);
+        calendar.add(Calendar.DATE, changeDate);
         Date date = calendar.getTime();
         long timestamp = date.getTime();
 

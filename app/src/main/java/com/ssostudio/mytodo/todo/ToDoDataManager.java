@@ -1,6 +1,7 @@
 package com.ssostudio.mytodo.todo;
 
 import com.ssostudio.mytodo.model.ToDoModel;
+import com.ssostudio.mytodo.model.ToDoModelList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +43,38 @@ public class ToDoDataManager {
         }
 
         return isCompleted;
+    }
+
+    public boolean decoratorCheck(long timestamp){
+        ArrayList<ToDoModel> list = ToDoModelList.allToDoModels;
+
+        for (ToDoModel todo:
+                list) {
+            if (todo.getStart_date() <= timestamp && todo.getDeadline_date() >= timestamp)
+                return true;
+        }
+
+        return false;
+    }
+
+    public boolean[] decoratorChecks(long timestamp){
+        ArrayList<ToDoModel> list = ToDoModelList.allToDoModels;
+
+        boolean[] checks = {false, false};
+
+        for (ToDoModel todo:
+                list) {
+            if (todo.getStart_date() <= timestamp && todo.getDeadline_date() >= timestamp){
+                checks[0] = true;
+                if (todo.getTodo_now_count() < todo.getTodo_max_count()){
+                    return checks;
+                }
+            }
+        }
+
+        checks[1] = true;
+
+        return checks;
     }
 
 //    public ArrayList<ToDoModel> toDoCompletedSortToList(ArrayList<ToDoModel> list){

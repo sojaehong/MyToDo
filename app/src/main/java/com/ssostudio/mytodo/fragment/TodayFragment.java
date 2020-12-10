@@ -1,10 +1,7 @@
 package com.ssostudio.mytodo.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +16,7 @@ import com.ssostudio.mytodo.adapter.ToDoListVIewAdapter;
 import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.dialog.ToDoAddDialog;
 import com.ssostudio.mytodo.model.ToDoModelList;
+import com.ssostudio.mytodo.utility.DateManager;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
 
@@ -41,7 +39,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         setAddBtn();
 
-        new DBManager(_context).selectTodayTodo();
+        new DBManager(_context).selectTodayToDo();
 
         setToDoListVIew();
     }
@@ -77,9 +75,11 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
                             // 시작Y가 끝 Y보다 크다면 터치가 아래서 위로 이루어졌다는 것이고, 스크롤은 아래로내려갔다는 뜻이다.
                             // (startYPosition - endYPosition) > 10 은 터치로 이동한 거리가 10픽셀 이상은 이동해야 스크롤 이동으로 감지하겠다는 뜻임으로 필요하지 않으면 제거해도 된다.
                             if ((startYPosition > endYPosition) && (startYPosition - endYPosition) > 10) {
+//                                addBtn.hide();
                             }
                             //시작 Y가 끝 보다 작다면 터치가 위에서 아래로 이러우졌다는 것이고, 스크롤이 올라갔다는 뜻이다.
                             else if ((startYPosition < endYPosition) && (endYPosition - startYPosition) > 10) {
+//                                addBtn.show();
                             }
                         }
 
@@ -99,7 +99,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         listView = view.findViewById(R.id.to_do_list);
 
-        new DBManager(_context).selectTodayTodo();
+        new DBManager(_context).selectTodayToDo();
 
         adapter = new ToDoListVIewAdapter(_context, ToDoModelList.todayToDoModels);
         listView.setAdapter(adapter);
@@ -120,6 +120,6 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onAddButtonClick() {
-        new ToDoAddDialog(_context).onShowDialog(0);
+        new ToDoAddDialog(_context).onShowDialog(0, DateManager.getTimestamp());
     }
 }

@@ -15,6 +15,10 @@ public class ToDoModel implements Serializable {
     private long last_update_date;
     // 추가 한 날짜
     private long add_date;
+    // 시작일
+    private long start_date;
+    // 종료일
+    private long deadline_date;
     // 0:일간, 1:주간, 2:월간, 3:연간, 4:버킷리스트
     private int todo_type;
     // 할일 테그
@@ -68,6 +72,22 @@ public class ToDoModel implements Serializable {
 
     public void setAdd_date(long add_date) {
         this.add_date = add_date;
+    }
+
+    public long getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(long start_date) {
+        this.start_date = start_date;
+    }
+
+    public long getDeadline_date() {
+        return deadline_date;
+    }
+
+    public void setDeadline_date(long deadline_date) {
+        this.deadline_date = deadline_date;
     }
 
     public int getTodo_type() {

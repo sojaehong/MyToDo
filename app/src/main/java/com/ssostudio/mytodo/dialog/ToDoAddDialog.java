@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.ssostudio.mytodo.R;
 import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.model.ToDoModel;
+import com.ssostudio.mytodo.utility.DateManager;
 
 public class ToDoAddDialog implements View.OnClickListener {
 
@@ -22,6 +23,7 @@ public class ToDoAddDialog implements View.OnClickListener {
     private ToDoModel _toDoModel = new ToDoModel();
     private Dialog _dialog;
     private int _type;
+    private long _startDate;
     private TextView titleTextVIew;
     private MaterialButton cancelBtn, okBtn, plusBtn, subBtn;
     private TextInputEditText todoText, countText;
@@ -30,8 +32,9 @@ public class ToDoAddDialog implements View.OnClickListener {
         _context = context;
     }
 
-    public void onShowDialog(int type){
+    public void onShowDialog(int type, long startDate){
         _type = type;
+        _startDate = startDate;
         init();
     }
 
@@ -85,15 +88,6 @@ public class ToDoAddDialog implements View.OnClickListener {
         switch (_type){
             case 0:
                 titleText = _context.getString(R.string.today);
-                break;
-            case 1:
-                titleText = _context.getString(R.string.this_week);
-                break;
-            case 2:
-                titleText = _context.getString(R.string.this_month);
-                break;
-            case 3:
-                titleText = _context.getString(R.string.this_year);
                 break;
         }
 
@@ -150,6 +144,8 @@ public class ToDoAddDialog implements View.OnClickListener {
         _toDoModel.setTodo_title(todo);
         _toDoModel.setTodo_max_count(count);
         _toDoModel.setTodo_type(_type);
+        _toDoModel.setStart_date(DateManager.dayStartTimestamp(_startDate));
+        _toDoModel.setDeadline_date(DateManager.dayEndTimestamp(_startDate));
         new DBManager(_context).addTodoDB(_toDoModel);
     }
 

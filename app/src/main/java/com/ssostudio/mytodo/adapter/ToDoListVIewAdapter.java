@@ -1,16 +1,17 @@
 package com.ssostudio.mytodo.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ssostudio.mytodo.R;
+import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.model.ToDoModel;
 import com.ssostudio.mytodo.todo.ToDoDataManager;
 import com.ssostudio.mytodo.utility.AppUtility;
@@ -24,18 +25,21 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     private int _size;
     private LayoutInflater inflater;
     private ArrayList<ToDoModel> _list;
-    private Boolean isTitleSet = false;
     private TextView toDoTitleTextVIew, countTextView;
     private ImageView upImageView, downImageView;
+    private LinearLayout completedLayout;
+    private int completedFirst = 0;
 
-
-    public ToDoListVIewAdapter(Context context, Map<String, ArrayList<ToDoModel>> listMap){
+    public ToDoListVIewAdapter(Context context, Map<String, ArrayList<ToDoModel>> listMap) {
         _context = context;
         inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         _list = new ArrayList<>();
-        _list.addAll(listMap.get("failList"));
-        _list.addAll(listMap.get("completedList"));
+        ArrayList<ToDoModel> failList = listMap.get("failList");
+        ArrayList<ToDoModel> completedList = listMap.get("completedList");
+        _list.addAll(failList);
+        _list.addAll(completedList);
+        completedFirst = failList.size();
 
         _size = _list.size();
     }
@@ -57,24 +61,21 @@ public class ToDoListVIewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        boolean isTitleItem = false;
 
-        if (new ToDoDataManager().toDoCompletedCheck(_list.get(i)) && !isTitleSet){
-            isTitleSet = true;
-            isTitleItem = true;
+        if (new ToDoDataManager().toDoCompletedCheck(_list.get(i)) && i == completedFirst) {
             view = inflater.inflate(R.layout.to_do_title_item, viewGroup, false);
-            Log.d("ListCheck" , "title");
-        }else{
+        } else {
             view = inflater.inflate(R.layout.to_do_item, viewGroup, false);
-            Log.d("ListCheck" , "no title");
         }
 
-        ToDoModel toDoModel = _list.get(i);
+        final ToDoModel toDoModel = _list.get(i);
 
         toDoTitleTextVIew = view.findViewById(R.id.to_do_title_text_view);
         toDoTitleTextVIew.setText(toDoModel.getTodo_title());
 
-        String countText = toDoModel.getTodo_now_count()+" / "+toDoModel.getTodo_max_count();
+        final long nowCount = toDoModel.getTodo_now_count();
+        final long maxCount = toDoModel.getTodo_max_count();
+        String countText = nowCount + " / " + maxCount;
 
         countTextView = view.findViewById(R.id.count_text);
         countTextView.setText(countText);
@@ -83,7 +84,10 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         upImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickVibrator();
+                if (nowCount < maxCount) {
+                    onClickVibrator();
+                    new DBManager(_context).todoCountUp(toDoModel.getTodo_id());
+                }
             }
         });
 
@@ -91,23 +95,35 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         downImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickVibrator();
+                if (nowCount >= maxCount) {
+                    onClickVibrator();
+                    new DBManager(_context).todoCountDown(toDoModel.getTodo_id());
+                }
             }
         });
+
+        completedLayout = view.findViewById(R.id.completed_ll);
 
         view.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
+            }
+        });
 
-            }});
-
+        if (nowCount >= maxCount){
+            upImageView.setVisibility(View.GONE);
+            completedLayout.setVisibility(View.VISIBLE);
+        }else{
+            upImageView.setVisibility(View.VISIBLE);
+            completedLayout.setVisibility(View.GONE);
+        }
         return view;
     }
 
-    private void onClickVibrator(){
-        AppUtility.onVibrator(_context, 15);
+    private void onClickVibrator() {
+        AppUtility.onVibrator(_context, 13);
     }
 
 

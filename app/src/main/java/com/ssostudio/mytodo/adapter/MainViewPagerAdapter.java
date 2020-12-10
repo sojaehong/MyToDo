@@ -9,9 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.ssostudio.mytodo.R;
+import com.ssostudio.mytodo.fragment.CalendarFragment;
 import com.ssostudio.mytodo.fragment.SettingFragment;
 import com.ssostudio.mytodo.fragment.TodayFragment;
-import com.ssostudio.mytodo.fragment.CalendarFragment;
 
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
     private Context _context;
