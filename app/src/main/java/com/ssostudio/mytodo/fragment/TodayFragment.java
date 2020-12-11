@@ -120,6 +120,6 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onAddButtonClick() {
-        new ToDoAddDialog(_context).onShowDialog(0, DateManager.getTimestamp());
+        new ToDoAddDialog(_context).onShowDialog(0, DateManager.getTimestamp(), true);
     }
 }

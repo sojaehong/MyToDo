@@ -153,7 +153,7 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onAddBtnClick() {
-        new ToDoAddDialog(this).onShowDialog(0, DateManager.intArrayToTimestamp(_dates));
+        new ToDoAddDialog(this).onShowDialog(0, DateManager.intArrayToTimestamp(_dates), false);
     }
 
     private void onNextImageViewClick() {

@@ -28,6 +28,6 @@ public class IncompleteEventDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(10, Color.RED));
+        view.addSpan(new DotSpan(10, Color.rgb(255,34,33)));
     }
 }

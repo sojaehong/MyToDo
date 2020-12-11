@@ -24,6 +24,7 @@ public class ToDoAddDialog implements View.OnClickListener {
     private Dialog _dialog;
     private int _type;
     private long _startDate;
+    private boolean _isToday;
     private TextView titleTextVIew;
     private MaterialButton cancelBtn, okBtn, plusBtn, subBtn;
     private TextInputEditText todoText, countText;
@@ -32,9 +33,11 @@ public class ToDoAddDialog implements View.OnClickListener {
         _context = context;
     }
 
-    public void onShowDialog(int type, long startDate){
+    public void onShowDialog(int type, long startDate, boolean isToday){
         _type = type;
         _startDate = startDate;
+        _isToday = isToday;
+
         init();
     }
 
@@ -87,11 +90,14 @@ public class ToDoAddDialog implements View.OnClickListener {
 
         switch (_type){
             case 0:
-                titleText = _context.getString(R.string.today);
+                if (_isToday){
+                    titleText = _context.getString(R.string.today);
+                }else{
+                    int[] dates = DateManager.timestampToIntArray(_startDate);
+                    titleText = DateManager.dateTimeZoneFormat(dates);
+                }
                 break;
         }
-
-        titleText = titleText + " " + _context.getString(R.string.todo);
 
         return titleText;
     }

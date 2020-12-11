@@ -89,7 +89,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:text="-"
-                    android:textColor="@color/red"
+                    android:textColor="@color/bRed"
                     android:textSize="25dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -100,7 +100,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:text="+"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/orientarBlue"
                     android:textSize="25dp" />
 
             </LinearLayout>
@@ -120,8 +120,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cancel"
-                android:textColor="@color/red"
-                android:textSize="18dp" />
+                android:textColor="@color/bRed"
+                android:textSize="16dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ok_button"
@@ -129,8 +129,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add"
-                android:textColor="@color/blue"
-                android:textSize="18dp" />
+                android:textColor="@color/orientarBlue"
+                android:textSize="16dp" />
 
         </LinearLayout>
 
