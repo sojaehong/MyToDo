@@ -31,13 +31,7 @@ public class DBManager {
 
         switch (toDoModel.getTodo_type()) {
             case 0:
-                new TodayFragment().listVIewRefresh();
-                if (ToDoActivity.class == _context.getClass()) {
-                    ((ToDoActivity) _context).refresh();
-                } else {
-                    new DBManager(_context).todoAllSelect();
-                    new CalendarFragment().calendarDecoratorsRefresh();
-                }
+                viewRefresh();
                 break;
         }
     }
@@ -70,6 +64,9 @@ public class DBManager {
         new TodayFragment().listVIewRefresh();
         if (ToDoActivity.class == _context.getClass()) {
             ((ToDoActivity) _context).refresh();
+        }else {
+            new DBManager(_context).todoAllSelect();
+            new CalendarFragment().calendarDecoratorsRefresh();
         }
     }
 

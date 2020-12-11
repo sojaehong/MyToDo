@@ -3,6 +3,7 @@ package com.ssostudio.mytodo.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,12 @@ public class CalendarFragment extends Fragment {
         if (view == null)
             return;
 
+        Log.d("logCheck", "calendarDecoratorsRefresh");
+
         materialCalendarView = view.findViewById(R.id.calendarView);
+
+        materialCalendarView.removeDecorator(new IncompleteEventDecorator());
+        materialCalendarView.removeDecorator(new CompletedEventDecorator());
 
         materialCalendarView.addDecorators(new IncompleteEventDecorator(),new CompletedEventDecorator());
     }
