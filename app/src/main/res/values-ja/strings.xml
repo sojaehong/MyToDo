@@ -16,4 +16,7 @@
     <string name="next">Next</string>
     <string name="completed_to_do">完了</string>
     <string name="completed">Completed</string>
+    <string name="total">Total</string>
+    <string name="in_progress">In progress</string>
+    <string name="completed_text">Completed</string>
 </resources>

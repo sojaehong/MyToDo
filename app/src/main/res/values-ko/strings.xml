@@ -16,4 +16,7 @@
     <string name="next">다음</string>
     <string name="completed_to_do">완료된 할일</string>
     <string name="completed">Completed</string>
+    <string name="total">전체</string>
+    <string name="in_progress">진행중</string>
+    <string name="completed_text">완료</string>
 </resources>

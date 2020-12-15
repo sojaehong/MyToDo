@@ -1,13 +1,11 @@
 package com.ssostudio.mytodo.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,47 +24,81 @@ import com.ssostudio.mytodo.utility.DateManager;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class TodayFragment extends Fragment implements View.OnClickListener {
-
+public class YearFragment extends Fragment implements View.OnClickListener {
     private static View view;
     private static Context _context;
     private FloatingActionButton addBtn;
-    private ToDoListVIewAdapter adapter;
     private ListView listView;
     private TextView statisticsTitleTextView, contentTextView;
     private ProgressBar toDoProgressBar;
+    private ImageView beforeImageView, nextImageView;
+    private ToDoListVIewAdapter adapter;
+    private static int _year;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_today, container, false);
-
+        view = inflater.inflate(R.layout.fragment_year, container, false);
+        _context = getContext();
         init();
 
         return view;
     }
 
-    private void init() {
-        _context = getContext();
-
+    private void init(){
+        setThisYear();
+        setListVIew();
         setAddBtn();
-
-        new DBManager(_context).selectTodayToDo();
-
-        setToDoListVIew();
-
-        setSimpleStatisticsVIew();
+        setBeforeImageView();
+        setNextImageView();
+        setStatisticsView();
     }
 
-    public void setSimpleStatisticsVIew() {
+    private void setThisYear(){
+        _year = DateManager.timestampToIntArray(DateManager.getTimestamp())[0];
+    }
+
+    private void setAddBtn() {
+        addBtn = view.findViewById(R.id.add_button);
+        addBtn.setOnClickListener(this);
+    }
+
+    private void setBeforeImageView(){
+        beforeImageView = view.findViewById(R.id.before_image);
+        beforeImageView.setOnClickListener(this);
+        beforeImageView.setVisibility(View.VISIBLE);
+    }
+
+    private void setNextImageView(){
+        nextImageView = view.findViewById(R.id.next_image);
+        nextImageView.setOnClickListener(this);
+        nextImageView.setVisibility(View.VISIBLE);
+    }
+
+    private void setListVIew() {
         if (view == null)
             return;
 
-        Map<String, ArrayList<ToDoModel>> toDoModels = ToDoModelList.todayToDoModels;
+        new DBManager(_context).selectYearToDo(_year);
+
+        listView = view.findViewById(R.id.to_do_list);
+        adapter = new ToDoListVIewAdapter(_context, ToDoModelList.yearToDoModels);
+        listView.setAdapter(adapter);
+    }
+
+    public void listRefresh(){
+        setListVIew();
+    }
+
+    public void setStatisticsView(){
+        if (view == null)
+            return;
+
+        Map<String, ArrayList<ToDoModel>> toDoModels = ToDoModelList.yearToDoModels;
         int completed = toDoModels.get("completedList").size();
         int incompleted = toDoModels.get("failList").size();
         int total = completed + incompleted;
         double percent = (double) completed / (double) total * 100.0;
 
-        String titleText = _context.getString(R.string.today);
+        String titleText = ""+_year;
 
         String contentText = _context.getString(R.string.total) + ": " + total + " | " + _context.getString(R.string.in_progress) + ": "
                 + incompleted + " | " + _context.getString(R.string.completed_text) + ": " + completed;
@@ -81,46 +113,45 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         contentTextView.setText(contentText);
     }
 
-    private void setToDoListVIew() {
-        listView = view.findViewById(R.id.to_do_list);
-        adapter = new ToDoListVIewAdapter(getContext(), ToDoModelList.todayToDoModels);
-        listView.setAdapter(adapter);
-    }
-
-    public void listVIewRefresh() {
-        if (view == null)
-            return;
-
-        listView = view.findViewById(R.id.to_do_list);
-
-        new DBManager(_context).selectTodayToDo();
-
-        adapter = new ToDoListVIewAdapter(_context, ToDoModelList.todayToDoModels);
-        listView.setAdapter(adapter);
-    }
-
-    private void setAddBtn() {
-        addBtn = view.findViewById(R.id.add_button);
-        addBtn.setOnClickListener(this);
+    private void viewRefresh(){
+        listRefresh();
+        setStatisticsView();
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
+
+        switch (view.getId()){
             case R.id.add_button:
                 onAddButtonClick();
                 break;
+            case R.id.before_image:
+                onBeforeImageClick();
+                break;
+            case R.id.next_image:
+                onNextImageClick();
+                break;
         }
+
     }
 
-    private void onAddButtonClick() {
-        new ToDoAddDialog(_context).onShowDialog(0, DateManager.getTimestamp(), true);
+    private void onAddButtonClick(){
+        new ToDoAddDialog(_context).onShowDialog(1, _year);
+    }
+
+    private void onBeforeImageClick(){
+        _year = --_year;
+        viewRefresh();
+    }
+
+    private void onNextImageClick(){
+        _year = ++_year;
+        viewRefresh();
     }
 
     @Override
     public void onResume() {
-        listVIewRefresh();
-        setSimpleStatisticsVIew();
+        viewRefresh();
         super.onResume();
     }
 }

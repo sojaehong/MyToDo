@@ -1,5 +1,7 @@
 package com.ssostudio.mytodo.utility;
 
+import android.util.Log;
+
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.DateFormat;
@@ -150,6 +152,36 @@ public class DateManager {
         int[] dateArray = timestampToIntArray(timestamp);
 
         calendar.set(dateArray[0], dateArray[1] -1, dateArray[2], 23,59,59);
+
+        Date date = calendar.getTime();
+
+        return date.getTime();
+    }
+
+    public static long yearStartTimestamp(int year){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(year, 0,1,0,0,0);
+
+        Date date = calendar.getTime();
+
+        return date.getTime();
+    }
+
+    public static long yearEndTimestamp(int year){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(year, 11,31,0,0,0);
+
+        Date date = calendar.getTime();
+
+        return date.getTime();
+    }
+
+    public static long yearSelectTimestamp(int year){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(year, 9,9,0,0,0);
 
         Date date = calendar.getTime();
 

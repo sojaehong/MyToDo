@@ -29,11 +29,11 @@ public class ToDoAddDialog implements View.OnClickListener {
     private MaterialButton cancelBtn, okBtn, plusBtn, subBtn;
     private TextInputEditText todoText, countText;
 
-    public ToDoAddDialog(Context context){
+    public ToDoAddDialog(Context context) {
         _context = context;
     }
 
-    public void onShowDialog(int type, long startDate, boolean isToday){
+    public void onShowDialog(int type, long startDate, boolean isToday) {
         _type = type;
         _startDate = startDate;
         _isToday = isToday;
@@ -41,7 +41,21 @@ public class ToDoAddDialog implements View.OnClickListener {
         init();
     }
 
-    private void init(){
+    public void onShowDialog(int type, int year) {
+        _type = type;
+        _startDate = year;
+
+        init();
+    }
+
+    public void onShowDialog(int type) {
+        _type = type;
+        _startDate = 0;
+
+        init();
+    }
+
+    private void init() {
         _dialog = new Dialog(_context);
 
         _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -68,7 +82,7 @@ public class ToDoAddDialog implements View.OnClickListener {
             public void run() {
                 todoText.setFocusableInTouchMode(true);
                 todoText.requestFocus();
-                InputMethodManager imm = (InputMethodManager)_context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) _context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(todoText, 0);
             }
         });
@@ -85,17 +99,23 @@ public class ToDoAddDialog implements View.OnClickListener {
         window.setAttributes(layoutParams);
     }
 
-    private String getTitleText(){
+    private String getTitleText() {
         String titleText = "null";
 
-        switch (_type){
+        switch (_type) {
             case 0:
-                if (_isToday){
+                if (_isToday) {
                     titleText = _context.getString(R.string.today);
-                }else{
+                } else {
                     int[] dates = DateManager.timestampToIntArray(_startDate);
                     titleText = DateManager.dateTimeZoneFormat(dates);
                 }
+                break;
+            case 1:
+                titleText = "" + _startDate;
+                break;
+            case 2:
+                titleText = "버킷리스트";
                 break;
         }
 
@@ -104,7 +124,7 @@ public class ToDoAddDialog implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.cancel_button:
                 onClickCancelBtn();
                 break;
@@ -120,58 +140,66 @@ public class ToDoAddDialog implements View.OnClickListener {
         }
     }
 
-    private void onClickCancelBtn(){
+    private void onClickCancelBtn() {
         _dialog.dismiss();
     }
 
-    private void onClickOkBtn(){
+    private void onClickOkBtn() {
 
         String todo = todoText.getText().toString();
         String countString = countText.getText().toString();
         int count = 0;
 
-        if (!countString.equals("")){
+        if (!countString.equals("")) {
             count = Integer.parseInt(countString);
         }
 
-        if (todo.equals("")){
+        if (todo.equals("")) {
             Toast.makeText(_context, "할일을 입력해주세요", Toast.LENGTH_SHORT).show();
 
-        }else if(count < 1){
+        } else if (count < 1) {
             Toast.makeText(_context, "카운트는 최소 1입니다", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             addTodo(todo, count);
             _dialog.dismiss();
         }
 
     }
 
-    private void addTodo(String todo, int count){
+    private void addTodo(String todo, int count) {
         _toDoModel.setTodo_title(todo);
         _toDoModel.setTodo_max_count(count);
         _toDoModel.setTodo_type(_type);
-        _toDoModel.setStart_date(DateManager.dayStartTimestamp(_startDate));
-        _toDoModel.setDeadline_date(DateManager.dayEndTimestamp(_startDate));
+        if (_type == 0) {
+            _toDoModel.setStart_date(DateManager.dayStartTimestamp(_startDate));
+            _toDoModel.setDeadline_date(DateManager.dayEndTimestamp(_startDate));
+        } else if (_type == 1) {
+            _toDoModel.setStart_date(DateManager.yearStartTimestamp((int) _startDate));
+            _toDoModel.setDeadline_date(DateManager.yearEndTimestamp((int) _startDate));
+        }else if (_type == 2) {
+            _toDoModel.setStart_date(0);
+            _toDoModel.setDeadline_date(0);
+        }
         new DBManager(_context).addTodoDB(_toDoModel);
     }
 
-    private void onClickPlusBtn(){
+    private void onClickPlusBtn() {
         int count = Integer.parseInt(countText.getText().toString());
 
-        if (count < 999){
+        if (count < 999) {
             count += 1;
 
-            countText.setText(""+count);
+            countText.setText("" + count);
         }
     }
 
-    private void onClickSubBtn(){
+    private void onClickSubBtn() {
         int count = Integer.parseInt(countText.getText().toString());
 
-        if (count > 1){
+        if (count > 1) {
             count -= 1;
 
-            countText.setText(""+count);
+            countText.setText("" + count);
         }
     }
 }

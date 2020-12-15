@@ -130,7 +130,7 @@ public class DBHelperManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public ArrayList<ToDoModel> onToDoSelect(long selectDate) {
+    public ArrayList<ToDoModel> onToDoSelect(int type, long selectDate) {
 
         ArrayList<ToDoModel> list = new ArrayList<>();
 
@@ -138,7 +138,7 @@ public class DBHelperManager extends SQLiteOpenHelper {
 
             _db = getReadableDatabase();
 
-            String sql = "SELECT * FROM todo WHERE todo_type = 0 AND start_date <= "
+            String sql = "SELECT * FROM todo WHERE todo_type = " + type + " AND start_date <= "
                     + selectDate + "  AND deadline_date >= " + selectDate;
 
             Cursor cursor = _db.rawQuery(sql, null);

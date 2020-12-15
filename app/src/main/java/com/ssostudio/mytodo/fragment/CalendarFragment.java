@@ -71,8 +71,6 @@ public class CalendarFragment extends Fragment {
         if (view == null)
             return;
 
-        Log.d("logCheck", "calendarDecoratorsRefresh");
-
         materialCalendarView = view.findViewById(R.id.calendarView);
 
         materialCalendarView.removeDecorator(new IncompleteEventDecorator());

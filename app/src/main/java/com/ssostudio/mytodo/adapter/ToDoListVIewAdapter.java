@@ -86,7 +86,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
             public void onClick(View view) {
                 if (nowCount < maxCount) {
                     onClickVibrator();
-                    new DBManager(_context).todoCountUp(toDoModel.getTodo_id());
+                    new DBManager(_context).todoCountUp(toDoModel.getTodo_id(), toDoModel.getTodo_type());
                 }
             }
         });
@@ -95,9 +95,9 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         downImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (nowCount >= maxCount) {
+                if (nowCount > 0) {
                     onClickVibrator();
-                    new DBManager(_context).todoCountDown(toDoModel.getTodo_id());
+                    new DBManager(_context).todoCountDown(toDoModel.getTodo_id(), toDoModel.getTodo_type());
                 }
             }
         });
