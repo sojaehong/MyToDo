@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ssostudio.mytodo.R;
 import com.ssostudio.mytodo.dbhelper.DBManager;
+import com.ssostudio.mytodo.dialog.ToDoSelectDialog;
 import com.ssostudio.mytodo.model.ToDoModel;
 import com.ssostudio.mytodo.todo.ToDoDataManager;
 import com.ssostudio.mytodo.utility.AppUtility;
@@ -26,8 +27,8 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<ToDoModel> _list;
     private TextView toDoTitleTextVIew, countTextView;
-    private ImageView upImageView, downImageView;
-    private LinearLayout completedLayout;
+//    private ImageView upImageView, downImageView;
+    private LinearLayout completedLayout, upLinearLayout, downLinearLayout, textViewLinearLayout;
     private int completedFirst = 0;
 
     public ToDoListVIewAdapter(Context context, Map<String, ArrayList<ToDoModel>> listMap) {
@@ -80,8 +81,8 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         countTextView = view.findViewById(R.id.count_text);
         countTextView.setText(countText);
 
-        upImageView = view.findViewById(R.id.count_up_button);
-        upImageView.setOnClickListener(new View.OnClickListener() {
+        upLinearLayout = view.findViewById(R.id.up_ll);
+        upLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (nowCount < maxCount) {
@@ -91,8 +92,8 @@ public class ToDoListVIewAdapter extends BaseAdapter {
             }
         });
 
-        downImageView = view.findViewById(R.id.count_down_button);
-        downImageView.setOnClickListener(new View.OnClickListener() {
+        downLinearLayout = view.findViewById(R.id.down_ll);
+        downLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (nowCount > 0) {
@@ -104,21 +105,37 @@ public class ToDoListVIewAdapter extends BaseAdapter {
 
         completedLayout = view.findViewById(R.id.completed_ll);
 
-        view.setOnTouchListener(new View.OnTouchListener() {
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
 
+        if (nowCount >= maxCount){
+            upLinearLayout.setVisibility(View.GONE);
+            completedLayout.setVisibility(View.VISIBLE);
+        }else{
+            upLinearLayout.setVisibility(View.VISIBLE);
+            completedLayout.setVisibility(View.GONE);
+        }
+
+//        textViewLinearLayout = view.findViewById(R.id.text_view_ll);
+//        textViewLinearLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new ToDoSelectDialog(_context).onShowDialog(toDoModel);
+//            }
+//        });
+
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
+            public void onClick(View view) {
+                new ToDoSelectDialog(_context).onShowDialog(toDoModel);
             }
         });
 
-        if (nowCount >= maxCount){
-            upImageView.setVisibility(View.GONE);
-            completedLayout.setVisibility(View.VISIBLE);
-        }else{
-            upImageView.setVisibility(View.VISIBLE);
-            completedLayout.setVisibility(View.GONE);
-        }
         return view;
     }
 

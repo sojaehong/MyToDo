@@ -42,6 +42,20 @@ public class DateManager {
         return formatDate;
     }
 
+    public static String dateTimeZoneFormat(long timestamp){
+        Calendar calendar = Calendar.getInstance();
+
+        DateFormat format = DateFormat.getDateInstance(DateFormat.DEFAULT);
+        format.setTimeZone(calendar.getTimeZone());
+
+        Date date = new Date(timestamp);
+        calendar.setTime(date);
+
+        String formatDate = format.format(calendar.getTime());
+
+        return formatDate;
+    }
+
     public static String dateTimeZoneFullFormat(int[] date){
         Calendar calendar = Calendar.getInstance();
 

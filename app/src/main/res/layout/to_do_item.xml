@@ -23,18 +23,17 @@
                 android:id="@+id/completed_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/completedBackColor"
-                >
+                android:background="@color/completedBackColor">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/completed"
-                    android:textSize="38dp"
-                    android:textColor="@color/completedTextColor"
                     android:gravity="center"
-                    android:textStyle="italic"
                     android:rotation="8"
-                    />
+                    android:text="@string/completed"
+                    android:textColor="@color/completedTextColor"
+                    android:textSize="38dp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -73,13 +72,20 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/to_do_title_text_view"
+                    <LinearLayout
+                        android:id="@+id/text_view_ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="7"
-                        android:textColor="@color/textColor"
-                        android:textSize="18dp" />
+                        android:layout_weight="7">
+
+                        <TextView
+                            android:id="@+id/to_do_title_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColor"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/up_ll"

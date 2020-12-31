@@ -1,9 +1,12 @@
 package com.ssostudio.mytodo.fragment;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -72,6 +75,15 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
                 + incompleted + " | " + _context.getString(R.string.completed_text) + ": " + completed;
 
         toDoProgressBar = view.findViewById(R.id.to_do_progress_Bar);
+
+        int color = 0;
+        if(completed == total){
+            color = _context.getResources().getColor(R.color.orientarBlue);
+        }else{
+            color = _context.getResources().getColor(R.color.bRed);
+        }
+
+        toDoProgressBar.setProgressTintList(ColorStateList.valueOf(color));
         toDoProgressBar.setProgress((int) percent);
 
         statisticsTitleTextView = view.findViewById(R.id.statistics_title_text);
@@ -79,6 +91,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         contentTextView = view.findViewById(R.id.content_text);
         contentTextView.setText(contentText);
+
+
     }
 
     private void setToDoListVIew() {
