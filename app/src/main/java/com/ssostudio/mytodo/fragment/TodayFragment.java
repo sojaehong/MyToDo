@@ -77,9 +77,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         toDoProgressBar = view.findViewById(R.id.to_do_progress_Bar);
 
         int color = 0;
-        if(completed == total){
+        if (completed == total) {
             color = _context.getResources().getColor(R.color.orientarBlue);
-        }else{
+        } else {
             color = _context.getResources().getColor(R.color.bRed);
         }
 
@@ -105,12 +105,21 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         if (view == null)
             return;
 
-        listView = view.findViewById(R.id.to_do_list);
+        int lastPosition = 0;
+        int top = 0;
 
         new DBManager(_context).selectTodayToDo();
 
+        listView = view.findViewById(R.id.to_do_list);
+
+        lastPosition = listView.getFirstVisiblePosition();
+        View v = listView.getChildAt(0);
+        top = (v == null) ? 0 : (v.getTop() - listView.getPaddingTop());
+
         adapter = new ToDoListVIewAdapter(_context, ToDoModelList.todayToDoModels);
         listView.setAdapter(adapter);
+
+        listView.setSelectionFromTop(lastPosition, top);
     }
 
     private void setAddBtn() {

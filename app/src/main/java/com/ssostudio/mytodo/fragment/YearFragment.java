@@ -3,6 +3,7 @@ package com.ssostudio.mytodo.fragment;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class YearFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void init(){
+    private void init() {
         setThisYear();
         setListVIew();
         setAddBtn();
@@ -53,7 +54,7 @@ public class YearFragment extends Fragment implements View.OnClickListener {
         setStatisticsView();
     }
 
-    private void setThisYear(){
+    private void setThisYear() {
         _year = DateManager.timestampToIntArray(DateManager.getTimestamp())[0];
     }
 
@@ -62,13 +63,13 @@ public class YearFragment extends Fragment implements View.OnClickListener {
         addBtn.setOnClickListener(this);
     }
 
-    private void setBeforeImageView(){
+    private void setBeforeImageView() {
         beforeImageView = view.findViewById(R.id.before_image);
         beforeImageView.setOnClickListener(this);
         beforeImageView.setVisibility(View.VISIBLE);
     }
 
-    private void setNextImageView(){
+    private void setNextImageView() {
         nextImageView = view.findViewById(R.id.next_image);
         nextImageView.setOnClickListener(this);
         nextImageView.setVisibility(View.VISIBLE);
@@ -78,18 +79,28 @@ public class YearFragment extends Fragment implements View.OnClickListener {
         if (view == null)
             return;
 
+        int lastPosition = 0;
+        int top = 0;
+
         new DBManager(_context).selectYearToDo(_year);
 
         listView = view.findViewById(R.id.to_do_list);
+
+        lastPosition = listView.getFirstVisiblePosition();
+        View v = listView.getChildAt(0);
+        top = (v == null) ? 0 : (v.getTop() - listView.getPaddingTop());
+
         adapter = new ToDoListVIewAdapter(_context, ToDoModelList.yearToDoModels);
         listView.setAdapter(adapter);
+
+        listView.setSelectionFromTop(lastPosition, top);
     }
 
-    public void listRefresh(){
+    public void listRefresh() {
         setListVIew();
     }
 
-    public void setStatisticsView(){
+    public void setStatisticsView() {
         if (view == null)
             return;
 
@@ -99,7 +110,7 @@ public class YearFragment extends Fragment implements View.OnClickListener {
         int total = completed + incompleted;
         double percent = (double) completed / (double) total * 100.0;
 
-        String titleText = ""+_year;
+        String titleText = "" + _year;
 
         String contentText = _context.getString(R.string.total) + ": " + total + " | " + _context.getString(R.string.in_progress) + ": "
                 + incompleted + " | " + _context.getString(R.string.completed_text) + ": " + completed;
@@ -107,9 +118,9 @@ public class YearFragment extends Fragment implements View.OnClickListener {
         toDoProgressBar = view.findViewById(R.id.to_do_progress_Bar);
 
         int color = 0;
-        if(completed == total){
+        if (completed == total) {
             color = _context.getResources().getColor(R.color.orientarBlue);
-        }else{
+        } else {
             color = _context.getResources().getColor(R.color.bRed);
         }
 
@@ -123,7 +134,7 @@ public class YearFragment extends Fragment implements View.OnClickListener {
         contentTextView.setText(contentText);
     }
 
-    private void viewRefresh(){
+    private void viewRefresh() {
         listRefresh();
         setStatisticsView();
     }
@@ -131,7 +142,7 @@ public class YearFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.add_button:
                 onAddButtonClick();
                 break;
@@ -145,16 +156,16 @@ public class YearFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void onAddButtonClick(){
+    private void onAddButtonClick() {
         new ToDoAddDialog(_context).onShowDialog(1, _year);
     }
 
-    private void onBeforeImageClick(){
+    private void onBeforeImageClick() {
         _year = --_year;
         viewRefresh();
     }
 
-    private void onNextImageClick(){
+    private void onNextImageClick() {
         _year = ++_year;
         viewRefresh();
     }

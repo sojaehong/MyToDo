@@ -57,11 +57,21 @@ public class BucketListFragment extends Fragment implements View.OnClickListener
         if (view == null)
             return;
 
+        int lastPosition = 0;
+        int top = 0;
+
         new DBManager(_context).selectBucketList();
 
         listView = view.findViewById(R.id.to_do_list);
+
+        lastPosition = listView.getFirstVisiblePosition();
+        View v = listView.getChildAt(0);
+        top = (v == null) ? 0 : (v.getTop() - listView.getPaddingTop());
+
         adapter = new ToDoListVIewAdapter(_context, ToDoModelList.bucketListToDoModels);
         listView.setAdapter(adapter);
+
+        listView.setSelectionFromTop(lastPosition, top);
     }
 
     public void listRefresh(){

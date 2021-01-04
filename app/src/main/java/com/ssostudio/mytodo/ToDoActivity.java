@@ -134,9 +134,19 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setToDoListView(){
+        int lastPosition = 0;
+        int top = 0;
+
         listView = findViewById(R.id.to_do_list);
+
+        lastPosition = listView.getFirstVisiblePosition();
+        View v = listView.getChildAt(0);
+        top = (v == null) ? 0 : (v.getTop() - listView.getPaddingTop());
+
         adapter = new ToDoListVIewAdapter(this, ToDoModelList.selectToDoModels);
         listView.setAdapter(adapter);
+
+        listView.setSelectionFromTop(lastPosition, top);
     }
 
     @Override
