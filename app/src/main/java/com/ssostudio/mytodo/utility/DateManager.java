@@ -172,6 +172,7 @@ public class DateManager {
         return date.getTime();
     }
 
+    // 년도 시작 타임 스템프
     public static long yearStartTimestamp(int year){
         Calendar calendar = Calendar.getInstance();
 
@@ -182,6 +183,7 @@ public class DateManager {
         return date.getTime();
     }
 
+    // 년도 마지막 타임 스템프
     public static long yearEndTimestamp(int year){
         Calendar calendar = Calendar.getInstance();
 
@@ -192,6 +194,7 @@ public class DateManager {
         return date.getTime();
     }
 
+    // 년도 타임 스템프
     public static long yearSelectTimestamp(int year){
         Calendar calendar = Calendar.getInstance();
 
@@ -200,6 +203,15 @@ public class DateManager {
         Date date = calendar.getTime();
 
         return date.getTime();
+    }
+
+    // 날짜 차이 구하기
+    public static long calDateBetweenAandB(long a, long b){
+        long calDate = a - b ;
+        long calDateDays = calDate / (24*60*60*1000);
+        calDateDays = Math.abs(calDateDays);
+
+        return calDateDays;
     }
 
 }

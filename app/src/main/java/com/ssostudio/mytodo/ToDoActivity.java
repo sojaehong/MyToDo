@@ -4,22 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ssostudio.mytodo.adapter.ToDoListVIewAdapter;
 import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.dialog.ToDoAddDialog;
-import com.ssostudio.mytodo.fragment.CalendarFragment;
-import com.ssostudio.mytodo.fragment.TodayFragment;
 import com.ssostudio.mytodo.model.ToDoModel;
 import com.ssostudio.mytodo.model.ToDoModelList;
 import com.ssostudio.mytodo.utility.DateManager;
@@ -30,10 +26,9 @@ import java.util.Map;
 public class ToDoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private int[] _dates;
-    private TextView dateTextView;
     private ListView listView;
     private ToDoListVIewAdapter adapter;
-    private ImageView closeImageView, beforeImageView, nextImageView;
+    private MaterialButton closeBtn, beforeBtn, nextBtn;
     private FloatingActionButton addBtn;
     private TextView statisticsTitleTextView, contentTextView;
     private ProgressBar toDoProgressBar;
@@ -42,22 +37,20 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
-
         init();
     }
 
-    private void init(){
+    private void init() {
         Intent intent = getIntent();
         _dates = intent.getIntArrayExtra("dates");
 
         new DBManager(getApplicationContext()).selectToDo(DateManager.intArrayToTimestamp(_dates));
 
         setAddBtn();
-        setDateTextView();
         setToDoListView();
-        setCloseImageView();
-        setBeforeImageView();
-        setNextImageView();
+        setCloseBtn();
+        setBeforeBtn();
+        setNextBtn();
         setSimpleStatisticsVIew();
     }
 
@@ -66,30 +59,27 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
         addBtn.setOnClickListener(this);
     }
 
-    public void refresh(){
+    public void refresh() {
         if (getApplicationContext() == null)
             return;
 
         new DBManager(getApplicationContext()).selectToDo(DateManager.intArrayToTimestamp(_dates));
-        setDateTextView();
         setToDoListView();
     }
 
     public void setSimpleStatisticsVIew() {
+        long todayTimestamp = DateManager.getTimestamp();
+        long selectTimestamp = DateManager.intArrayToTimestamp(_dates);
+
         Map<String, ArrayList<ToDoModel>> toDoModels = ToDoModelList.selectToDoModels;
         int completed = toDoModels.get("completedList").size();
         int incompleted = toDoModels.get("failList").size();
         int total = completed + incompleted;
         double percent = (double) completed / (double) total * 100.0;
 
-        int[] todayDates = DateManager.timestampToIntArray(DateManager.getTimestamp());
+        long calDate = DateManager.calDateBetweenAandB(todayTimestamp, selectTimestamp);
 
-        String titleText = "";
-        if (_dates[0] == todayDates[0] && _dates[1] == todayDates[1] && _dates[2] == todayDates[2]){
-            titleText = getString(R.string.today);
-        }else{
-            titleText = DateManager.dateTimeZoneFullFormat(_dates);
-        }
+        String titleText = DateManager.dateTimeZoneFullFormat(_dates);
 
         String contentText = getString(R.string.total) + ": " + total + " | " + getString(R.string.in_progress) + ": "
                 + incompleted + " | " + getString(R.string.completed_text) + ": " + completed;
@@ -97,43 +87,62 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
         toDoProgressBar = findViewById(R.id.to_do_progress_Bar);
 
         int color = 0;
-        if(completed == total){
+        if (completed == total) {
             color = getResources().getColor(R.color.orientarBlue);
-        }else{
+        } else {
             color = getResources().getColor(R.color.bRed);
         }
 
         toDoProgressBar.setProgressTintList(ColorStateList.valueOf(color));
         toDoProgressBar.setProgress((int) percent);
 
-        statisticsTitleTextView = findViewById(R.id.statistics_title_text);
-        statisticsTitleTextView.setText(titleText);
-
         contentTextView = findViewById(R.id.content_text);
         contentTextView.setText(contentText);
+
+        statisticsTitleTextView = findViewById(R.id.statistics_title_text);
+
+        String calText = "";
+
+        if (calDate == 0) {
+            calText = getString(R.string.today);
+        } else {
+            if (todayTimestamp > selectTimestamp) {
+                if (calDate == 1)
+                    calText = getString(R.string.yesterday);
+                else
+                    calText = calDate + getString(R.string.days_ago);
+            } else {
+                if (calDate == 1)
+                    calText = getString(R.string.tomorrow);
+                else
+                    calText = calDate + getString(R.string.days_later);
+            }
+        }
+
+        calText = "(" + calText + ")";
+
+        titleText = titleText + " " + calText;
+
+        statisticsTitleTextView.setText(titleText);
+
     }
 
-    private void setNextImageView() {
-        nextImageView = findViewById(R.id.next_date_image);
-        nextImageView.setOnClickListener(this);
+    private void setNextBtn() {
+        nextBtn = findViewById(R.id.next_date_button);
+        nextBtn.setOnClickListener(this);
     }
 
-    private void setBeforeImageView() {
-        beforeImageView = findViewById(R.id.before_date_image);
-        beforeImageView.setOnClickListener(this);
+    private void setBeforeBtn() {
+        beforeBtn = findViewById(R.id.before_date_button);
+        beforeBtn.setOnClickListener(this);
     }
 
-    private void setCloseImageView() {
-        closeImageView = findViewById(R.id.close_image);
-        closeImageView.setOnClickListener(this);
+    private void setCloseBtn() {
+        closeBtn = findViewById(R.id.close_button);
+        closeBtn.setOnClickListener(this);
     }
 
-    private void setDateTextView(){
-        dateTextView = findViewById(R.id.date_text);
-        dateTextView.setText(DateManager.dateTimeZoneFormat(_dates));
-    }
-
-    private void setToDoListView(){
+    private void setToDoListView() {
         int lastPosition = 0;
         int top = 0;
 
@@ -151,14 +160,14 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.close_image:
+        switch (view.getId()) {
+            case R.id.close_button:
                 onCloseImageViewClick();
                 break;
-            case R.id.before_date_image:
+            case R.id.before_date_button:
                 onBeforeImageViewClick();
                 break;
-            case R.id.next_date_image:
+            case R.id.next_date_button:
                 onNextImageViewClick();
                 break;
             case R.id.add_button:
@@ -183,7 +192,7 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
-    private void dateChange(int changeDate){
+    private void dateChange(int changeDate) {
         long date = DateManager.changeDate(_dates, changeDate);
         _dates = DateManager.timestampToIntArray(date);
         refresh();

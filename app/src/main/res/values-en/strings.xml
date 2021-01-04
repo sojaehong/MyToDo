@@ -21,4 +21,8 @@
     <string name="completed_text">Completed</string>
     <string name="ok">Ok</string>
     <string name="delete_q">정말로 삭제하시겠습니까?</string>
+    <string name="days_ago">days ago</string>
+    <string name="days_later">days later</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="yesterday">Yesterday</string>
 </resources>
