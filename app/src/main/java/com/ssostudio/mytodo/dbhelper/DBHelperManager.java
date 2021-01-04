@@ -272,4 +272,24 @@ public class DBHelperManager extends SQLiteOpenHelper {
         }
     }
 
+    public void onToDoDelete(ToDoModel toDoModel) {
+        try {
+            long todoId = toDoModel.getTodo_id();
+
+            _db = getWritableDatabase();
+
+            String sql = "DELETE FROM todo WHERE todo_id = ?";
+
+            _statement = _db.compileStatement(sql);
+            _statement.bindLong(1,todoId);
+            _statement.execute();
+
+            _statement.close();
+            _db.close();
+
+        } catch (Exception e) {
+
+        }
+    }
+
 }

@@ -37,6 +37,9 @@ public class ToDoSelectDialog implements View.OnClickListener {
         cancelButton = _dialog.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(this);
 
+        deleteButton = _dialog.findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(this);
+
         String dateText = DateManager.dateTimeZoneFormat(_toDoModel.getStart_date())
                 + " ~ " + DateManager.dateTimeZoneFormat(_toDoModel.getDeadline_date());
         dateTextView = _dialog.findViewById(R.id.date_text);
@@ -66,10 +69,18 @@ public class ToDoSelectDialog implements View.OnClickListener {
             case R.id.cancel_button:
                 onCancelButtonClick();
                 break;
+            case R.id.delete_button:
+                onDeleteBtnClick();
+                break;
         }
     }
 
     private void onCancelButtonClick() {
+        _dialog.dismiss();
+    }
+
+    private void onDeleteBtnClick(){
+        new ConfirmationDialog(_context).onShowDialog(0, _toDoModel);
         _dialog.dismiss();
     }
 }

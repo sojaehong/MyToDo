@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.ssostudio.mytodo.R;
+import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.model.ToDoModel;
 
 public class ConfirmationDialog implements View.OnClickListener {
@@ -23,6 +24,7 @@ public class ConfirmationDialog implements View.OnClickListener {
         _context = context;
     }
 
+    // type 0: 투두 삭제
     public void onShowDialog(int type, ToDoModel toDoModel) {
         _type = type;
         _toDoModel = toDoModel;
@@ -70,7 +72,7 @@ public class ConfirmationDialog implements View.OnClickListener {
         switch (_type) {
             case 0:
 //                content = _context.getString()
-                content = "정말로 삭제하시겠습니까?";
+                content = _context.getString(R.string.delete_q);
                 break;
         }
         return content;
@@ -95,6 +97,8 @@ public class ConfirmationDialog implements View.OnClickListener {
     private void onOkBtnClick() {
         switch (_type) {
             case 0:
+                new DBManager(_context).deleteTodoDB(_toDoModel);
+                _dialog.dismiss();
                 break;
         }
     }

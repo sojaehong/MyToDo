@@ -33,6 +33,11 @@ public class DBManager {
         viewRefresh(toDoModel.getTodo_type());
     }
 
+    public void deleteTodoDB(ToDoModel toDoModel){
+        _db.onToDoDelete(toDoModel);
+        viewRefresh(toDoModel.getTodo_type());
+    }
+
     public void selectBucketList(){
         ArrayList<ToDoModel> list = _db.onToDoSelect(2, 0);
         ToDoModelList.bucketListToDoModels = new ToDoDataManager().toDoCompletedSortToMap(list);
