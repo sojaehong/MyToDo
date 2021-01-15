@@ -128,7 +128,7 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add"
+                android:text="@string/ok"
                 android:textColor="@color/orientarBlue"
                 android:textSize="16dp" />
 
