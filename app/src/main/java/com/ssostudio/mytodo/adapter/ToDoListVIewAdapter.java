@@ -113,11 +113,11 @@ public class ToDoListVIewAdapter extends BaseAdapter {
 //        });
 
         if (nowCount >= maxCount){
-            upImageBtn.setVisibility(View.GONE);
+            upImageBtn.setVisibility(View.INVISIBLE);
             completedLayout.setVisibility(View.VISIBLE);
         }else{
             upImageBtn.setVisibility(View.VISIBLE);
-            completedLayout.setVisibility(View.GONE);
+            completedLayout.setVisibility(View.INVISIBLE);
         }
 
         view.setOnClickListener(new View.OnClickListener() {
