@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.ssostudio.mytodo.R;
 import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.dialog.ToDoSelectDialog;
@@ -27,7 +28,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<ToDoModel> _list;
     private TextView toDoTitleTextVIew, countTextView;
-//    private ImageView upImageView, downImageView;
+    private MaterialButton upImageBtn, downImageBtn;
     private LinearLayout completedLayout, upLinearLayout, downLinearLayout, textViewLinearLayout;
     private int completedFirst = 0;
 
@@ -81,8 +82,8 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         countTextView = view.findViewById(R.id.count_text);
         countTextView.setText(countText);
 
-        upLinearLayout = view.findViewById(R.id.up_ll);
-        upLinearLayout.setOnClickListener(new View.OnClickListener() {
+        upImageBtn = view.findViewById(R.id.count_up_button);
+        upImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (nowCount < maxCount) {
@@ -92,8 +93,8 @@ public class ToDoListVIewAdapter extends BaseAdapter {
             }
         });
 
-        downLinearLayout = view.findViewById(R.id.down_ll);
-        downLinearLayout.setOnClickListener(new View.OnClickListener() {
+        downImageBtn = view.findViewById(R.id.count_down_button);
+        downImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (nowCount > 0) {
@@ -112,6 +113,8 @@ public class ToDoListVIewAdapter extends BaseAdapter {
 //                return true;
 //            }
 //        });
+
+        upLinearLayout = view.findViewById(R.id.up_ll);
 
         if (nowCount >= maxCount){
             upLinearLayout.setVisibility(View.GONE);
