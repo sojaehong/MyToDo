@@ -2,11 +2,9 @@ package com.ssostudio.mytodo.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,7 +27,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     private ArrayList<ToDoModel> _list;
     private TextView toDoTitleTextVIew, countTextView;
     private MaterialButton upImageBtn, downImageBtn;
-    private LinearLayout completedLayout, upLinearLayout, downLinearLayout, textViewLinearLayout;
+    private LinearLayout completedLayout;
     private int completedFirst = 0;
 
     public ToDoListVIewAdapter(Context context, Map<String, ArrayList<ToDoModel>> listMap) {
@@ -114,23 +112,13 @@ public class ToDoListVIewAdapter extends BaseAdapter {
 //            }
 //        });
 
-        upLinearLayout = view.findViewById(R.id.up_ll);
-
         if (nowCount >= maxCount){
-            upLinearLayout.setVisibility(View.GONE);
+            upImageBtn.setVisibility(View.GONE);
             completedLayout.setVisibility(View.VISIBLE);
         }else{
-            upLinearLayout.setVisibility(View.VISIBLE);
+            upImageBtn.setVisibility(View.VISIBLE);
             completedLayout.setVisibility(View.GONE);
         }
-
-//        textViewLinearLayout = view.findViewById(R.id.text_view_ll);
-//        textViewLinearLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new ToDoSelectDialog(_context).onShowDialog(toDoModel);
-//            }
-//        });
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
