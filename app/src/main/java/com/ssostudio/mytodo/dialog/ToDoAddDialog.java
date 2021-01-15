@@ -21,10 +21,12 @@ public class ToDoAddDialog implements View.OnClickListener {
 
     private Context _context;
     private ToDoModel _toDoModel = new ToDoModel();
-    private Dialog _dialog;
     private int _type;
     private long _startDate;
-    private boolean _isToday;
+    private boolean _isToday = false;
+    private boolean _isUpdate = false;
+
+    private Dialog _dialog;
     private TextView titleTextVIew;
     private MaterialButton cancelBtn, okBtn, plusBtn, subBtn;
     private TextInputEditText todoText, countText;
@@ -51,6 +53,20 @@ public class ToDoAddDialog implements View.OnClickListener {
     public void onShowDialog(int type) {
         _type = type;
         _startDate = 0;
+
+        init();
+    }
+
+    public void onShowUpdateDialog(ToDoModel toDoModel) {
+        _isUpdate = true;
+        _toDoModel = toDoModel;
+        _type = _toDoModel.getTodo_type();
+
+        if (_type == 0) {
+            _startDate = _toDoModel.getStart_date();
+        } else if (_type == 1) {
+            _startDate = DateManager.timestampToIntArray(_toDoModel.getStart_date())[0];
+        }
 
         init();
     }
@@ -88,6 +104,11 @@ public class ToDoAddDialog implements View.OnClickListener {
         });
 
         countText = _dialog.findViewById(R.id.count_text);
+
+        if (_isUpdate) {
+            todoText.setText(_toDoModel.getTodo_title());
+            countText.setText("" + _toDoModel.getTodo_max_count());
+        }
 
         _dialog.show();
 
@@ -160,7 +181,10 @@ public class ToDoAddDialog implements View.OnClickListener {
         } else if (count < 1) {
             Toast.makeText(_context, "카운트는 최소 1입니다", Toast.LENGTH_SHORT).show();
         } else {
-            addTodo(todo, count);
+            if (_isUpdate)
+                updateToDo(todo, count);
+            else
+                addTodo(todo, count);
             _dialog.dismiss();
         }
 
@@ -176,11 +200,17 @@ public class ToDoAddDialog implements View.OnClickListener {
         } else if (_type == 1) {
             _toDoModel.setStart_date(DateManager.yearStartTimestamp((int) _startDate));
             _toDoModel.setDeadline_date(DateManager.yearEndTimestamp((int) _startDate));
-        }else if (_type == 2) {
+        } else if (_type == 2) {
             _toDoModel.setStart_date(0);
             _toDoModel.setDeadline_date(0);
         }
         new DBManager(_context).addTodoDB(_toDoModel);
+    }
+
+    private void updateToDo(String todo, int count) {
+        _toDoModel.setTodo_title(todo);
+        _toDoModel.setTodo_max_count(count);
+        new DBManager(_context).updateTodoDB(_toDoModel);
     }
 
     private void onClickPlusBtn() {

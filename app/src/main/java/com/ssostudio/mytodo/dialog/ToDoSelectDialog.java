@@ -37,6 +37,9 @@ public class ToDoSelectDialog implements View.OnClickListener {
         cancelButton = _dialog.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(this);
 
+        updateButton = _dialog.findViewById(R.id.update_button);
+        updateButton.setOnClickListener(this);
+
         deleteButton = _dialog.findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(this);
 
@@ -72,6 +75,9 @@ public class ToDoSelectDialog implements View.OnClickListener {
             case R.id.delete_button:
                 onDeleteBtnClick();
                 break;
+            case R.id.update_button:
+                onUpdateBtnClick();
+                break;
         }
     }
 
@@ -81,6 +87,11 @@ public class ToDoSelectDialog implements View.OnClickListener {
 
     private void onDeleteBtnClick(){
         new ConfirmationDialog(_context).onShowDialog(0, _toDoModel);
+        _dialog.dismiss();
+    }
+
+    private void onUpdateBtnClick(){
+        new ToDoAddDialog(_context).onShowUpdateDialog(_toDoModel);
         _dialog.dismiss();
     }
 }

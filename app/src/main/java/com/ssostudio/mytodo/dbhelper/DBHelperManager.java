@@ -226,6 +226,30 @@ public class DBHelperManager extends SQLiteOpenHelper {
         return size;
     }
 
+    public void onToDoUpdate(ToDoModel toDoModel){
+        try {
+            String sql = "";
+
+            _db = getWritableDatabase();
+
+            sql = "UPDATE todo SET todo_title = ?, todo_max_count = ?, start_date = ?, deadline_date = ? WHERE todo_id = ?";
+            _statement = _db.compileStatement(sql);
+
+            _statement.bindString(1, toDoModel.getTodo_title());
+            _statement.bindLong(2, toDoModel.getTodo_max_count());
+            _statement.bindLong(3, toDoModel.getStart_date());
+            _statement.bindLong(4, toDoModel.getDeadline_date());
+            _statement.bindLong(5, toDoModel.getTodo_id());
+
+            _statement.execute();
+            _statement.close();
+            _db.close();
+
+        }catch (Exception e){
+
+        }
+    }
+
     public void onCountUpdate(long id, int type) {
         try {
             String sql = "";

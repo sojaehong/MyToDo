@@ -33,6 +33,11 @@ public class DBManager {
         viewRefresh(toDoModel.getTodo_type());
     }
 
+    public void updateTodoDB(ToDoModel toDoModel){
+        _db.onToDoUpdate(toDoModel);
+        viewRefresh(toDoModel.getTodo_type());
+    }
+
     public void deleteTodoDB(ToDoModel toDoModel){
         _db.onToDoDelete(toDoModel);
         viewRefresh(toDoModel.getTodo_type());
