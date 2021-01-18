@@ -115,6 +115,15 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/deadline_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deadline"
+                android:textColor="@color/orientarBlue"
+                android:textSize="16dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_button"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"

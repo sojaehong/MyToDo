@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
+                android:textSize="14dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="날짜"/>
@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
+                android:textSize="14dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="할일"/>
@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
+                android:textSize="14dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="카운트"/>
@@ -90,7 +90,7 @@
                 android:padding="5dp"
                 android:text="수정"
                 android:textColor="@color/textColor"
-                android:textSize="22dp" />
+                android:textSize="20dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/delete_button"
@@ -102,7 +102,7 @@
                 android:padding="5dp"
                 android:text="삭제"
                 android:textColor="@color/textColor"
-                android:textSize="22dp" />
+                android:textSize="20dp" />
 
         </LinearLayout>
 

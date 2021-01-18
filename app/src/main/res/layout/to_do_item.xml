@@ -76,7 +76,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="right|center_horizontal"
                             android:textSize="10dp"
-                            android:layout_marginTop="1dp"
+                            android:layout_marginTop="0.5dp"
                             />
 
                         <TextView
@@ -94,7 +94,7 @@
                             android:gravity="right|center_horizontal"
                             android:textSize="10dp"
                             android:text=" "
-                            android:layout_marginBottom="1dp"
+                            android:layout_marginBottom="0.5dp"
                             />
 
                     </LinearLayout>

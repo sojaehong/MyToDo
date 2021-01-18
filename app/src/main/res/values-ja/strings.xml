@@ -25,4 +25,5 @@
     <string name="days_later">日後</string>
     <string name="tomorrow">明日</string>
     <string name="yesterday">昨日</string>
+    <string name="deadline">締め切り</string>
 </resources>

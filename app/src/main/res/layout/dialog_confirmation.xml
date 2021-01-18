@@ -13,7 +13,7 @@
         android:layout_marginLeft="5dp"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:textColor="@color/bRed"
-            android:textSize="18dp" />
+            android:textSize="16dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ok_button"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/ok"
             android:textColor="@color/orientarBlue"
-            android:textSize="18dp" />
+            android:textSize="16dp" />
 
     </LinearLayout>
 
