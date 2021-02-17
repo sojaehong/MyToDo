@@ -2,6 +2,7 @@ package com.ssostudio.mytodo.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -30,6 +31,7 @@ public class ToDoAddDialog implements View.OnClickListener {
     private TextView titleTextVIew;
     private MaterialButton cancelBtn, okBtn, plusBtn, subBtn;
     private TextInputEditText todoText, countText;
+    private InputMethodManager imm;
 
     public ToDoAddDialog(Context context) {
         _context = context;
@@ -93,15 +95,6 @@ public class ToDoAddDialog implements View.OnClickListener {
         subBtn.setOnClickListener(this);
 
         todoText = _dialog.findViewById(R.id.to_do_text);
-        todoText.post(new Runnable() {
-            @Override
-            public void run() {
-                todoText.setFocusableInTouchMode(true);
-                todoText.requestFocus();
-                InputMethodManager imm = (InputMethodManager) _context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(todoText, 0);
-            }
-        });
 
         countText = _dialog.findViewById(R.id.count_text);
 
@@ -110,7 +103,24 @@ public class ToDoAddDialog implements View.OnClickListener {
             countText.setText("" + _toDoModel.getTodo_max_count());
         }
 
+        todoText.post(new Runnable() {
+            @Override
+            public void run() {
+                todoText.setFocusableInTouchMode(true);
+                todoText.requestFocus();
+                imm = (InputMethodManager) _context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }
+        });
+
         _dialog.show();
+
+        _dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            }
+        });
 
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.copyFrom(_dialog.getWindow().getAttributes());

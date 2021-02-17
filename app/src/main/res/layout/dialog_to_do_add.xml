@@ -41,8 +41,6 @@
                     android:id="@+id/to_do_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
                     android:textSize="18dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
