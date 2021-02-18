@@ -1,5 +1,6 @@
 package com.ssostudio.mytodo.dialog;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,9 @@ import com.ssostudio.mytodo.R;
 import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.model.ToDoModel;
 import com.ssostudio.mytodo.utility.DateManager;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class ToDoAddDialog implements View.OnClickListener {
 
@@ -31,7 +36,7 @@ public class ToDoAddDialog implements View.OnClickListener {
 
     private Dialog _dialog;
     private TextView titleTextVIew;
-    private MaterialButton cancelBtn, okBtn, plusBtn, subBtn;
+    private MaterialButton cancelBtn, okBtn, plusBtn, subBtn, deadlineBtn;
     private TextInputEditText todoText, countText;
     private InputMethodManager imm;
 
@@ -92,6 +97,13 @@ public class ToDoAddDialog implements View.OnClickListener {
         titleTextVIew = _dialog.findViewById(R.id.title_text_view);
         titleTextVIew.setText(getTitleText());
 
+        deadlineBtn = _dialog.findViewById(R.id.deadline_button);
+        if (_type == 0) {
+            deadlineBtn.setOnClickListener(this);
+        } else {
+            deadlineBtn.setVisibility(View.GONE);
+        }
+
         cancelBtn = _dialog.findViewById(R.id.cancel_button);
         cancelBtn.setOnClickListener(this);
 
@@ -113,22 +125,14 @@ public class ToDoAddDialog implements View.OnClickListener {
             countText.setText("" + _toDoModel.getTodo_max_count());
         }
 
-        todoText.post(new Runnable() {
-            @Override
-            public void run() {
-                todoText.setFocusableInTouchMode(true);
-                todoText.requestFocus();
-                imm = (InputMethodManager) _context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-            }
-        });
+        showKeyboard();
 
         _dialog.show();
 
         _dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                hideKeyboard();
             }
         });
 
@@ -138,6 +142,22 @@ public class ToDoAddDialog implements View.OnClickListener {
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         Window window = _dialog.getWindow();
         window.setAttributes(layoutParams);
+    }
+
+    private void showKeyboard() {
+        todoText.post(new Runnable() {
+            @Override
+            public void run() {
+                todoText.setFocusableInTouchMode(true);
+                todoText.requestFocus();
+                imm = (InputMethodManager) _context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }
+        });
+    }
+
+    private void hideKeyboard() {
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     private String getTitleText() {
@@ -181,15 +201,98 @@ public class ToDoAddDialog implements View.OnClickListener {
             case R.id.sub_button:
                 onClickSubBtn();
                 break;
+            case R.id.deadline_button:
+                onClickDeadlineBtn();
+                break;
         }
     }
+
+    private void onClickDeadlineBtn() {
+        if (inputCheck()){
+            onDatePickerShow();
+            _dialog.hide();
+        }
+    }
+
+    private void onDatePickerShow() {
+        int[] date = DateManager.timestampToIntArray(DateManager.getTimestamp());
+
+        DatePickerDialog dateDialog = new DatePickerDialog(_context, listener, date[0], date[1] - 1, date[2]);
+
+        dateDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                hideKeyboard();
+            }
+        });
+
+        dateDialog.setButton(DialogInterface.BUTTON_NEGATIVE, _context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_NEGATIVE) {
+                    _dialog.show();
+                    showKeyboard();
+                }
+            }
+        });
+
+        int[] startDates = DateManager.timestampToIntArray(_startDate);
+
+        Calendar minDate = Calendar.getInstance();
+        minDate.set(startDates[0], startDates[1] - 1, startDates[2] + 1);
+        dateDialog.getDatePicker().setMinDate(minDate.getTimeInMillis());
+
+        dateDialog.show();
+    }
+
+    private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            int[] date = {year, monthOfYear + 1, dayOfMonth};
+
+            String todo = todoText.getText().toString();
+            String countString = countText.getText().toString();
+            int count = 0;
+
+            if (!countString.equals("")) {
+                count = Integer.parseInt(countString);
+            }
+
+            long timestamp = DateManager.intArrayToTimestamp(date);
+
+            if (_isUpdate)
+                updateToDo(todo, count, timestamp);
+            else
+                addTodo(todo, count, timestamp);
+
+            _dialog.dismiss();
+        }
+    };
 
     private void onClickCancelBtn() {
         _dialog.dismiss();
     }
 
     private void onClickOkBtn() {
+        if (inputCheck()) {
 
+            String todo = todoText.getText().toString();
+            String countString = countText.getText().toString();
+            int count = 0;
+
+            if (!countString.equals("")) {
+                count = Integer.parseInt(countString);
+            }
+
+            if (_isUpdate)
+                updateToDo(todo, count, 0);
+            else
+                addTodo(todo, count, 0);
+
+            _dialog.dismiss();
+        }
+    }
+
+    private boolean inputCheck() {
         String todo = todoText.getText().toString();
         String countString = countText.getText().toString();
         int count = 0;
@@ -200,20 +303,16 @@ public class ToDoAddDialog implements View.OnClickListener {
 
         if (todo.equals("")) {
             Toast.makeText(_context, "할일을 입력해주세요", Toast.LENGTH_SHORT).show();
-
+            return false;
         } else if (count < 1) {
             Toast.makeText(_context, "카운트는 최소 1입니다", Toast.LENGTH_SHORT).show();
+            return false;
         } else {
-            if (_isUpdate)
-                updateToDo(todo, count);
-            else
-                addTodo(todo, count);
-            _dialog.dismiss();
+            return true;
         }
-
     }
 
-    private void addTodo(String todo, int count) {
+    private void addTodo(String todo, int count, long deadline) {
         _toDoModel.setTodo_title(todo);
         _toDoModel.setTodo_max_count(count);
         _toDoModel.setTodo_type(_type);
@@ -221,7 +320,11 @@ public class ToDoAddDialog implements View.OnClickListener {
         switch (_type) {
             case 0:
                 _toDoModel.setStart_date(DateManager.dayStartTimestamp(_startDate));
-                _toDoModel.setDeadline_date(DateManager.dayEndTimestamp(_startDate));
+                if (deadline == 0){
+                    _toDoModel.setDeadline_date(DateManager.dayEndTimestamp(_startDate));
+                }else{
+                    _toDoModel.setDeadline_date(DateManager.dayEndTimestamp(deadline));
+                }
                 break;
             case 1:
                 _toDoModel.setStart_date(DateManager.yearStartTimestamp((int) _startDate));
@@ -240,9 +343,12 @@ public class ToDoAddDialog implements View.OnClickListener {
         new DBManager(_context).addTodoDB(_toDoModel);
     }
 
-    private void updateToDo(String todo, int count) {
+    private void updateToDo(String todo, int count, long deadline) {
         _toDoModel.setTodo_title(todo);
         _toDoModel.setTodo_max_count(count);
+        if (deadline != 0){
+            _toDoModel.setDeadline_date(DateManager.dayEndTimestamp(deadline));
+        }
         new DBManager(_context).updateTodoDB(_toDoModel);
     }
 
