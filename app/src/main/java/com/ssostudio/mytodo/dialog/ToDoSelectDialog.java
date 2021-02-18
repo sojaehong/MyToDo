@@ -43,8 +43,15 @@ public class ToDoSelectDialog implements View.OnClickListener {
         deleteButton = _dialog.findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(this);
 
-        String dateText = DateManager.dateTimeZoneFormat(_toDoModel.getStart_date())
-                + " ~ " + DateManager.dateTimeZoneFormat(_toDoModel.getDeadline_date());
+        String dateText = "";
+
+        if (_toDoModel.getTodo_type() == 2) {
+            dateText = "버킷리스트";
+        } else {
+            dateText = DateManager.dateTimeZoneFormat(_toDoModel.getStart_date())
+                    + " ~ " + DateManager.dateTimeZoneFormat(_toDoModel.getDeadline_date());
+        }
+
         dateTextView = _dialog.findViewById(R.id.date_text);
         dateTextView.setText(dateText);
 
@@ -85,12 +92,12 @@ public class ToDoSelectDialog implements View.OnClickListener {
         _dialog.dismiss();
     }
 
-    private void onDeleteBtnClick(){
+    private void onDeleteBtnClick() {
         new ConfirmationDialog(_context).onShowDialog(0, _toDoModel);
         _dialog.dismiss();
     }
 
-    private void onUpdateBtnClick(){
+    private void onUpdateBtnClick() {
         new ToDoAddDialog(_context).onShowUpdateDialog(_toDoModel);
         _dialog.dismiss();
     }
