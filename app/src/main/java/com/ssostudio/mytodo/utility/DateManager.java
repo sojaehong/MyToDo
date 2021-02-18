@@ -193,8 +193,6 @@ public class DateManager {
 
         Date date = calendar.getTime();
 
-        Log.d("DateTest" , ""+lastday);
-
         return date.getTime();
     }
 
