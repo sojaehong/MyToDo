@@ -6,6 +6,7 @@ import android.util.Log;
 import com.ssostudio.mytodo.ToDoActivity;
 import com.ssostudio.mytodo.fragment.BucketListFragment;
 import com.ssostudio.mytodo.fragment.CalendarFragment;
+import com.ssostudio.mytodo.fragment.MonthFragment;
 import com.ssostudio.mytodo.fragment.TodayFragment;
 import com.ssostudio.mytodo.fragment.YearFragment;
 import com.ssostudio.mytodo.model.ToDoModel;
@@ -53,6 +54,11 @@ public class DBManager {
         ToDoModelList.yearToDoModels = new ToDoDataManager().toDoCompletedSortToMap(list);
     }
 
+    public void selectMonthToDo(int year, int month){
+        ArrayList<ToDoModel> list = _db.onToDoSelect(3, DateManager.monthSelectTimestamp(year, month));
+        ToDoModelList.monthToDoModels = new ToDoDataManager().toDoCompletedSortToMap(list);
+    }
+
     public void selectTodayToDo() {
         ArrayList<ToDoModel> list = _db.onToDoSelect(0, DateManager.getTimestamp());
         ToDoModelList.todayToDoModels = new ToDoDataManager().toDoCompletedSortToMap(list);
@@ -97,6 +103,10 @@ public class DBManager {
             case 2:
                 new BucketListFragment().listRefresh();
                 new BucketListFragment().setStatisticsView();
+                break;
+            case 3:
+                new MonthFragment().listRefresh();
+                new MonthFragment().setStatisticsView();
                 break;
         }
     }

@@ -19,7 +19,7 @@ public class ToDoModel implements Serializable {
     private long start_date;
     // 종료일
     private long deadline_date;
-    // 0:일간, 1:주간, 2:월간, 3:연간, 4:버킷리스트
+    // 0:일간, 1:연간, 2:버킷리스트, 3:월간
     private int todo_type;
     // 할일 테그
     private String todo_tag;

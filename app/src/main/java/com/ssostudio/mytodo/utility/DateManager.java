@@ -172,6 +172,32 @@ public class DateManager {
         return date.getTime();
     }
 
+    public static long monthStartTimestamp(int year, int month){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(year, month - 1, 1,0,0,0);
+
+        Date date = calendar.getTime();
+
+        return date.getTime();
+    }
+
+    public static long monthEndTimestamp(int year, int month){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(year, month - 1, 1,0,0,0);
+
+        int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        calendar.set(year, month - 1, lastday,0,0,0);
+
+        Date date = calendar.getTime();
+
+        Log.d("DateTest" , ""+lastday);
+
+        return date.getTime();
+    }
+
     // 년도 시작 타임 스템프
     public static long yearStartTimestamp(int year){
         Calendar calendar = Calendar.getInstance();
@@ -199,6 +225,16 @@ public class DateManager {
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(year, 9,9,0,0,0);
+
+        Date date = calendar.getTime();
+
+        return date.getTime();
+    }
+
+    public static long monthSelectTimestamp(int year,int month){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(year, month - 1, 13, 0,0,0);
 
         Date date = calendar.getTime();
 

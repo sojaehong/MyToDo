@@ -23,7 +23,9 @@ public class ToDoAddDialog implements View.OnClickListener {
     private Context _context;
     private ToDoModel _toDoModel = new ToDoModel();
     private int _type;
-    private long _startDate;
+    private long _startDate = 0;
+    private int _year;
+    private int _month;
     private boolean _isToday = false;
     private boolean _isUpdate = false;
 
@@ -52,6 +54,14 @@ public class ToDoAddDialog implements View.OnClickListener {
         init();
     }
 
+    public void onShowDialog(int type, int year, int month) {
+        _type = type;
+        _year = year;
+        _month = month;
+
+        init();
+    }
+
     public void onShowDialog(int type) {
         _type = type;
         _startDate = 0;
@@ -66,7 +76,7 @@ public class ToDoAddDialog implements View.OnClickListener {
 
         if (_type == 0) {
             _startDate = _toDoModel.getStart_date();
-        } else if (_type == 1) {
+        } else if (_type == 1 || _type == 2) {
             _startDate = DateManager.timestampToIntArray(_toDoModel.getStart_date())[0];
         }
 
@@ -148,6 +158,9 @@ public class ToDoAddDialog implements View.OnClickListener {
             case 2:
                 titleText = "버킷리스트";
                 break;
+            case 3:
+                titleText = _month + "/" + _year;
+                break;
         }
 
         return titleText;
@@ -204,16 +217,26 @@ public class ToDoAddDialog implements View.OnClickListener {
         _toDoModel.setTodo_title(todo);
         _toDoModel.setTodo_max_count(count);
         _toDoModel.setTodo_type(_type);
-        if (_type == 0) {
-            _toDoModel.setStart_date(DateManager.dayStartTimestamp(_startDate));
-            _toDoModel.setDeadline_date(DateManager.dayEndTimestamp(_startDate));
-        } else if (_type == 1) {
-            _toDoModel.setStart_date(DateManager.yearStartTimestamp((int) _startDate));
-            _toDoModel.setDeadline_date(DateManager.yearEndTimestamp((int) _startDate));
-        } else if (_type == 2) {
-            _toDoModel.setStart_date(0);
-            _toDoModel.setDeadline_date(0);
+
+        switch (_type) {
+            case 0:
+                _toDoModel.setStart_date(DateManager.dayStartTimestamp(_startDate));
+                _toDoModel.setDeadline_date(DateManager.dayEndTimestamp(_startDate));
+                break;
+            case 1:
+                _toDoModel.setStart_date(DateManager.yearStartTimestamp((int) _startDate));
+                _toDoModel.setDeadline_date(DateManager.yearEndTimestamp((int) _startDate));
+                break;
+            case 2:
+                _toDoModel.setStart_date(0);
+                _toDoModel.setDeadline_date(0);
+                break;
+            case 3:
+                _toDoModel.setStart_date(DateManager.monthStartTimestamp(_year, _month));
+                _toDoModel.setDeadline_date(DateManager.monthEndTimestamp(_year, _month));
+                break;
         }
+
         new DBManager(_context).addTodoDB(_toDoModel);
     }
 
