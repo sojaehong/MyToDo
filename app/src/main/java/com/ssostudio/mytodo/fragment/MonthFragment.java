@@ -185,6 +185,7 @@ public class MonthFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onResume() {
+        setThisMonth();
         viewRefresh();
         super.onResume();
     }

@@ -172,6 +172,7 @@ public class YearFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onResume() {
+        setThisYear();
         viewRefresh();
         super.onResume();
     }

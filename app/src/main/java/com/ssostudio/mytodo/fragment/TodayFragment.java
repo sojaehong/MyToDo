@@ -52,7 +52,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         setAddBtn();
 
-        new DBManager(_context).selectTodayToDo();
+        setTodayToDoList();
 
         setToDoListVIew();
 
@@ -93,6 +93,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         contentTextView.setText(contentText);
 
 
+    }
+
+    private void setTodayToDoList(){
+        new DBManager(_context).selectTodayToDo();
     }
 
     private void setToDoListVIew() {
@@ -142,6 +146,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onResume() {
+        setTodayToDoList();
         listVIewRefresh();
         setSimpleStatisticsVIew();
         super.onResume();
