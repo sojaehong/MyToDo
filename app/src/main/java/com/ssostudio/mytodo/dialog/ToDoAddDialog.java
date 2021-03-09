@@ -160,6 +160,7 @@ public class ToDoAddDialog implements View.OnClickListener {
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
+    // todo 언어 현지화 필요
     private String getTitleText() {
         String titleText = "null";
 
@@ -292,6 +293,7 @@ public class ToDoAddDialog implements View.OnClickListener {
         }
     }
 
+    // todo 언어 현지화 필요
     private boolean inputCheck() {
         String todo = todoText.getText().toString();
         String countString = countText.getText().toString();

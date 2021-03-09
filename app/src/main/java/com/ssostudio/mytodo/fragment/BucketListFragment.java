@@ -78,6 +78,7 @@ public class BucketListFragment extends Fragment implements View.OnClickListener
         setListVIew();
     }
 
+    // todo 언어 현지화 필요
     public void setStatisticsView(){
         if (view == null)
             return;

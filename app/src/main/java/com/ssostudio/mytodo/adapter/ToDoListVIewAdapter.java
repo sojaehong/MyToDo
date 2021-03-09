@@ -15,6 +15,7 @@ import com.ssostudio.mytodo.dialog.ToDoSelectDialog;
 import com.ssostudio.mytodo.model.ToDoModel;
 import com.ssostudio.mytodo.todo.ToDoDataManager;
 import com.ssostudio.mytodo.utility.AppUtility;
+import com.ssostudio.mytodo.utility.DateManager;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     private ArrayList<ToDoModel> _list;
     private TextView toDoTitleTextVIew, countTextView;
     private MaterialButton upImageBtn, downImageBtn;
-    private LinearLayout completedLayout;
+    private LinearLayout completedLayout, failedLayout;
     private int completedFirst = 0;
 
     public ToDoListVIewAdapter(Context context, Map<String, ArrayList<ToDoModel>> listMap) {
@@ -103,6 +104,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         });
 
         completedLayout = view.findViewById(R.id.completed_ll);
+        failedLayout = view.findViewById(R.id.failed_ll);
 
 //        view.setOnTouchListener(new View.OnTouchListener() {
 //
@@ -112,13 +114,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
 //            }
 //        });
 
-        if (nowCount >= maxCount){
-            upImageBtn.setVisibility(View.INVISIBLE);
-            completedLayout.setVisibility(View.VISIBLE);
-        }else{
-            upImageBtn.setVisibility(View.VISIBLE);
-            completedLayout.setVisibility(View.INVISIBLE);
-        }
+        completedToDo(nowCount, maxCount, toDoModel);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,5 +130,63 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         AppUtility.onVibrator(_context, 13);
     }
 
+    // 완료된 할일 체크 후 완료된 할일 표시
+    private void completedToDo(long nowCount, long maxCount ,ToDoModel toDoModel){
+        failedLayout.setVisibility(View.INVISIBLE);
+
+        if (nowCount >= maxCount){
+            upImageBtn.setVisibility(View.INVISIBLE);
+            completedLayout.setVisibility(View.VISIBLE);
+        }else{
+            upImageBtn.setVisibility(View.VISIBLE);
+            completedLayout.setVisibility(View.INVISIBLE);
+            failedToDo(toDoModel);
+        }
+    }
+
+    // 오늘이 지난 할일중 완료되지 않은 할일 체크 후 표시
+    private void failedToDo(ToDoModel toDoModel){
+        // 0:일간, 1:연간, 2:버킷리스트, 3:월간
+        int type = toDoModel.getTodo_type();
+        long deadline = toDoModel.getDeadline_date();
+        int[] thisDates = null;
+        int thisYear = 0;
+        int thisMonth = 0;
+        int[] deadlineDates = null;
+        int deadlineYear = 0;
+        int deadlineMonth = 0;
+
+        switch (type){
+            case 0:
+                long todayStartTimestamp = DateManager.dayStartTimestamp(DateManager.getTimestamp());
+
+                if (deadline < todayStartTimestamp)
+                    failedLayout.setVisibility(View.VISIBLE);
+
+                break;
+            case 1:
+                thisDates = DateManager.timestampToIntArray(DateManager.getTimestamp());
+                thisYear = thisDates[0];
+                deadlineDates = DateManager.timestampToIntArray(deadline);
+                deadlineYear = deadlineDates[0];
+
+                if (thisYear > deadlineYear)
+                    failedLayout.setVisibility(View.VISIBLE);
+
+                break;
+            case 3:
+                thisDates = DateManager.timestampToIntArray(DateManager.getTimestamp());
+                thisYear = thisDates[0];
+                thisMonth = thisDates[1];
+                deadlineDates = DateManager.timestampToIntArray(deadline);
+                deadlineYear = deadlineDates[0];
+                deadlineMonth = deadlineDates[1];
+
+                if (thisYear > deadlineYear || (thisYear == deadlineYear && thisMonth > deadlineMonth))
+                    failedLayout.setVisibility(View.VISIBLE);
+
+                break;
+        }
+    }
 
 }

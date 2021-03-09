@@ -28,6 +28,7 @@ public class ToDoSelectDialog implements View.OnClickListener {
         init();
     }
 
+    // todo 언어 현지화 필요
     private void init() {
         _dialog = new Dialog(_context);
 

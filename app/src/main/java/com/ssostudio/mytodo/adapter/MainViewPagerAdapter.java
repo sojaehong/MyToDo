@@ -51,6 +51,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
         return 6;
     }
 
+    // todo 언어 현지화 필요
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
