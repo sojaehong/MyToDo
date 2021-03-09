@@ -26,7 +26,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     private int _size;
     private LayoutInflater inflater;
     private ArrayList<ToDoModel> _list;
-    private TextView toDoTitleTextVIew, countTextView;
+    private TextView toDoTitleTextVIew, countTextView, itemDateTextVIew;
     private MaterialButton upImageBtn, downImageBtn;
     private LinearLayout completedLayout, failedLayout;
     private int completedFirst = 0;
@@ -80,6 +80,12 @@ public class ToDoListVIewAdapter extends BaseAdapter {
 
         countTextView = view.findViewById(R.id.count_text);
         countTextView.setText(countText);
+
+        if (toDoModel.getTodo_type() == 0){
+            String dateText = " ~ " + DateManager.dateTimeZoneFormat(toDoModel.getDeadline_date());
+            itemDateTextVIew = view.findViewById(R.id.item_date_text);
+            itemDateTextVIew.setText(dateText);
+        }
 
         upImageBtn = view.findViewById(R.id.count_up_button);
         upImageBtn.setOnClickListener(new View.OnClickListener() {
