@@ -81,7 +81,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         countTextView = view.findViewById(R.id.count_text);
         countTextView.setText(countText);
 
-        if (toDoModel.getTodo_type() == 0){
+        if (toDoModel.getTodo_type() == 0) {
             String dateText = " ~ " + DateManager.dateTimeZoneFormat(toDoModel.getDeadline_date());
             itemDateTextVIew = view.findViewById(R.id.item_date_text);
             itemDateTextVIew.setText(dateText);
@@ -125,7 +125,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ToDoSelectDialog(_context).onShowDialog(toDoModel);
+                new ToDoSelectDialog(_context).onShowDialog(toDoModel, failedCheck(nowCount,maxCount,toDoModel));
             }
         });
 
@@ -137,13 +137,13 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     }
 
     // 완료된 할일 체크 후 완료된 할일 표시
-    private void completedToDo(long nowCount, long maxCount ,ToDoModel toDoModel){
+    private void completedToDo(long nowCount, long maxCount, ToDoModel toDoModel) {
         failedLayout.setVisibility(View.INVISIBLE);
 
-        if (nowCount >= maxCount){
+        if (nowCount >= maxCount) {
             upImageBtn.setVisibility(View.INVISIBLE);
             completedLayout.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             upImageBtn.setVisibility(View.VISIBLE);
             completedLayout.setVisibility(View.INVISIBLE);
             failedToDo(toDoModel);
@@ -151,7 +151,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     }
 
     // 오늘이 지난 할일중 완료되지 않은 할일 체크 후 표시
-    private void failedToDo(ToDoModel toDoModel){
+    private void failedToDo(ToDoModel toDoModel) {
         // 0:일간, 1:연간, 2:버킷리스트, 3:월간
         int type = toDoModel.getTodo_type();
         long deadline = toDoModel.getDeadline_date();
@@ -162,7 +162,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         int deadlineYear = 0;
         int deadlineMonth = 0;
 
-        switch (type){
+        switch (type) {
             case 0:
                 long todayStartTimestamp = DateManager.dayStartTimestamp(DateManager.getTimestamp());
 
@@ -193,6 +193,52 @@ public class ToDoListVIewAdapter extends BaseAdapter {
 
                 break;
         }
+    }
+
+    private boolean failedCheck(long nowCount, long maxCount, ToDoModel toDoModel) {
+        if (nowCount < maxCount) {
+            int type = toDoModel.getTodo_type();
+            long deadline = toDoModel.getDeadline_date();
+            int[] thisDates = null;
+            int thisYear = 0;
+            int thisMonth = 0;
+            int[] deadlineDates = null;
+            int deadlineYear = 0;
+            int deadlineMonth = 0;
+
+            switch (type) {
+                case 0:
+                    long todayStartTimestamp = DateManager.dayStartTimestamp(DateManager.getTimestamp());
+
+                    if (deadline < todayStartTimestamp)
+                        return true;
+
+                    break;
+                case 1:
+                    thisDates = DateManager.timestampToIntArray(DateManager.getTimestamp());
+                    thisYear = thisDates[0];
+                    deadlineDates = DateManager.timestampToIntArray(deadline);
+                    deadlineYear = deadlineDates[0];
+
+                    if (thisYear > deadlineYear)
+                        return true;
+
+                    break;
+                case 3:
+                    thisDates = DateManager.timestampToIntArray(DateManager.getTimestamp());
+                    thisYear = thisDates[0];
+                    thisMonth = thisDates[1];
+                    deadlineDates = DateManager.timestampToIntArray(deadline);
+                    deadlineYear = deadlineDates[0];
+                    deadlineMonth = deadlineDates[1];
+
+                    if (thisYear > deadlineYear || (thisYear == deadlineYear && thisMonth > deadlineMonth))
+                        return true;
+
+                    break;
+            }
+        }
+        return false;
     }
 
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.ssostudio.mytodo.R;
+import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.model.ToDoModel;
 import com.ssostudio.mytodo.utility.DateManager;
 
@@ -16,15 +17,17 @@ public class ToDoSelectDialog implements View.OnClickListener {
     private Context _context;
     private ToDoModel _toDoModel = new ToDoModel();
     private Dialog _dialog;
-    private MaterialButton cancelButton, updateButton, deleteButton;
+    private MaterialButton cancelButton, updateButton, deleteButton, continueButton;
     private TextView dateTextView, contentTextView, countTextView;
+    private boolean _isFailed = false;
 
     public ToDoSelectDialog(Context context) {
         _context = context;
     }
 
-    public void onShowDialog(ToDoModel toDoModel) {
+    public void onShowDialog(ToDoModel toDoModel, boolean isFailed) {
         _toDoModel = toDoModel;
+        _isFailed = isFailed;
         init();
     }
 
@@ -64,6 +67,12 @@ public class ToDoSelectDialog implements View.OnClickListener {
         countTextView = _dialog.findViewById(R.id.count_text);
         countTextView.setText(countText);
 
+        continueButton = _dialog.findViewById(R.id.continue_button);
+        if (_isFailed && _toDoModel.getTodo_type() == 0){
+            continueButton.setVisibility(View.VISIBLE);
+            continueButton.setOnClickListener(this);
+        }
+
         _dialog.show();
 
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
@@ -86,7 +95,20 @@ public class ToDoSelectDialog implements View.OnClickListener {
             case R.id.update_button:
                 onUpdateBtnClick();
                 break;
+            case R.id.continue_button:
+                onContinueBtnClick();
+                break;
         }
+    }
+
+    private void onContinueBtnClick() {
+        long todayEndTimestamp = DateManager.dayEndTimestamp(DateManager.getTimestamp());
+
+        _toDoModel.setDeadline_date(todayEndTimestamp);
+
+        new DBManager(_context).updateTodoDB(_toDoModel);
+
+        _dialog.dismiss();
     }
 
     private void onCancelButtonClick() {
