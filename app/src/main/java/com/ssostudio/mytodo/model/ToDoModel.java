@@ -2,7 +2,7 @@ package com.ssostudio.mytodo.model;
 
 import java.io.Serializable;
 
-public class ToDoModel implements Serializable {
+public class ToDoModel implements Serializable, Comparable<ToDoModel> {
     // 고유 아이디
     private long todo_id;
     // 할일 타이틀
@@ -112,5 +112,16 @@ public class ToDoModel implements Serializable {
 
     public void setTodo_note(String todo_note) {
         this.todo_note = todo_note;
+    }
+
+    @Override
+    public int compareTo(ToDoModel toDoModel) {
+        if (this.getDeadline_date() > toDoModel.getDeadline_date()) {
+            return 1;
+        } else if (this.getDeadline_date() < toDoModel.getDeadline_date()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

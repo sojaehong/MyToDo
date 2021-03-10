@@ -4,6 +4,7 @@ import com.ssostudio.mytodo.model.ToDoModel;
 import com.ssostudio.mytodo.model.ToDoModelList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,9 @@ public class ToDoDataManager {
                 failList.add(toDoModel);
             }
         }
+
+        Collections.sort(completedList);
+        Collections.sort(failList);
 
         map.put("completedList", completedList);
         map.put("failList", failList);
