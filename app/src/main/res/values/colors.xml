@@ -11,7 +11,7 @@
     <color name="green">#00FF00</color>
     <color name="tran">#00000000</color>
 
-    <color name="textColor">#323232</color>
+    <color name="textColor">#5a615e</color>
     <color name="completedBackColor">#591876FB</color>
     <color name="completedTextColor">#59FFFFFF</color>
     <color name="failedBackColor">#59ff2221</color>

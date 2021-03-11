@@ -37,4 +37,7 @@
     <string name="update">수정</string>
     <string name="delete">삭제</string>
     <string name="m_continue">이어하기</string>
+    <string name="settings_other_apps">개발자의 다른 앱</string>
+    <string name="settings_app_review">앱 리뷰하기</string>
+    <string name="settings_app_recommend">앱 추천하기</string>
 </resources>

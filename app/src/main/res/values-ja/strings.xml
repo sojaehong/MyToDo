@@ -37,4 +37,7 @@
     <string name="update">修正</string>
     <string name="delete">削除</string>
     <string name="m_continue">続いする</string>
+    <string name="settings_other_apps">開発者の他のアプリ</string>
+    <string name="settings_app_review">アプリレビューする</string>
+    <string name="settings_app_recommend">アプリ推薦する</string>
 </resources>

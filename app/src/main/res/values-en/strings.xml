@@ -37,4 +37,7 @@
     <string name="update">Update</string>
     <string name="delete">Delete</string>
     <string name="m_continue">Continue</string>
+    <string name="settings_other_apps">Developer\'s other apps</string>
+    <string name="settings_app_review">Rate this app</string>
+    <string name="settings_app_recommend">Recommend this app</string>
 </resources>
