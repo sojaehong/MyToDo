@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,8 +28,13 @@
 
         </androidx.viewpager.widget.ViewPager>
 
-<!--        <include layout="@layout/to_do_add_button" />-->
+    </LinearLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <FrameLayout
+        android:id="@+id/adFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom" />
 
 </RelativeLayout>
