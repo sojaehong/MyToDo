@@ -24,7 +24,7 @@
                 android:textSize="14dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="날짜"/>
+                android:text="@string/date"/>
 
             <TextView
                 android:id="@+id/date_text"
@@ -42,7 +42,7 @@
                 android:textSize="14dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="할일"/>
+                android:text="to-do"/>
 
             <TextView
                 android:id="@+id/content_text"
@@ -60,7 +60,7 @@
                 android:textSize="14dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="카운트"/>
+                android:text="Count"/>
 
             <TextView
                 android:id="@+id/count_text"
@@ -88,7 +88,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="수정"
+                android:text="@string/update"
                 android:textColor="@color/textColor"
                 android:textSize="20dp" />
 
@@ -100,7 +100,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="삭제"
+                android:text="@string/delete"
                 android:textColor="@color/textColor"
                 android:textSize="20dp" />
 
@@ -116,7 +116,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:padding="5dp"
-            android:text="이어하기"
+            android:text="@string/m_continue"
             android:textColor="@color/textColor"
             android:textSize="20dp"
             android:visibility="gone"

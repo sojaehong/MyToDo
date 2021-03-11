@@ -31,7 +31,6 @@ public class ToDoSelectDialog implements View.OnClickListener {
         init();
     }
 
-    // todo 언어 현지화 필요
     private void init() {
         _dialog = new Dialog(_context);
 
@@ -50,7 +49,7 @@ public class ToDoSelectDialog implements View.OnClickListener {
         String dateText = "";
 
         if (_toDoModel.getTodo_type() == 2) {
-            dateText = "버킷리스트";
+            dateText = _context.getString(R.string.bucket_list);
         } else {
             dateText = DateManager.dateTimeZoneFormat(_toDoModel.getStart_date())
                     + " ~ " + DateManager.dateTimeZoneFormat(_toDoModel.getDeadline_date());

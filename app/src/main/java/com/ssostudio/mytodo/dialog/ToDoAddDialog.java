@@ -160,7 +160,6 @@ public class ToDoAddDialog implements View.OnClickListener {
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
-    // todo 언어 현지화 필요
     private String getTitleText() {
         String titleText = "null";
 
@@ -177,7 +176,7 @@ public class ToDoAddDialog implements View.OnClickListener {
                 titleText = "" + _startDate;
                 break;
             case 2:
-                titleText = "버킷리스트";
+                titleText = _context.getString(R.string.bucket_list);
                 break;
             case 3:
                 titleText = _month + "/" + _year;
@@ -293,7 +292,6 @@ public class ToDoAddDialog implements View.OnClickListener {
         }
     }
 
-    // todo 언어 현지화 필요
     private boolean inputCheck() {
         String todo = todoText.getText().toString();
         String countString = countText.getText().toString();
@@ -304,10 +302,10 @@ public class ToDoAddDialog implements View.OnClickListener {
         }
 
         if (todo.equals("")) {
-            Toast.makeText(_context, "할일을 입력해주세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(_context, _context.getString(R.string.todo_enter), Toast.LENGTH_SHORT).show();
             return false;
         } else if (count < 1) {
-            Toast.makeText(_context, "카운트는 최소 1입니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(_context, _context.getString(R.string.count_least), Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;

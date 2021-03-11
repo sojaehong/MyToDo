@@ -26,4 +26,15 @@
     <string name="tomorrow">내일</string>
     <string name="yesterday">어제</string>
     <string name="deadline">마감일</string>
+    <string name="calendar">달력</string>
+    <string name="month_plan">월간계획</string>
+    <string name="year_plan">연간계획</string>
+    <string name="bucket_list">버킷리스트</string>
+    <string name="settings">설정</string>
+    <string name="todo_enter">할 일을 입력해주세요.</string>
+    <string name="count_least">카운트는 최소 1 이상입니다.</string>
+    <string name="date">날짜</string>
+    <string name="update">수정</string>
+    <string name="delete">삭제</string>
+    <string name="m_continue">이어하기</string>
 </resources>

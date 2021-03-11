@@ -51,7 +51,6 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
         return 6;
     }
 
-    // todo 언어 현지화 필요
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
@@ -59,15 +58,15 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return _context.getString(R.string.today);
             case 1:
-                return "달력";
+                return _context.getString(R.string.calendar);
             case 2:
-                return "월간계획";
+                return _context.getString(R.string.month_plan);
             case 3:
-                return "연간계획";
+                return _context.getString(R.string.year_plan);
             case 4:
-                return "버킷리스트";
+                return _context.getString(R.string.bucket_list);
             case 5:
-                return "설정";
+                return _context.getString(R.string.settings);
         }
         return super.getPageTitle(position);
     }

@@ -89,7 +89,7 @@ public class BucketListFragment extends Fragment implements View.OnClickListener
         int total = completed + incompleted;
         double percent = (double) completed / (double) total * 100.0;
 
-        String titleText = "버킷리스트";
+        String titleText = _context.getString(R.string.bucket_list);
 
         String contentText = _context.getString(R.string.total) + ": " + total + " | " + _context.getString(R.string.in_progress) + ": "
                 + incompleted + " | " + _context.getString(R.string.completed_text) + ": " + completed;
