@@ -10,14 +10,14 @@
     <string name="this_month">今月</string>
     <string name="this_year">今年</string>
     <string name="todo">TODO</string>
-    <string name="cancel">キャンセル</string>
+    <string name="cancel">Cancel</string>
     <string name="add">追加</string>
     <string name="count_edit">"カウント設定 "</string>
     <string name="next">次</string>
     <string name="completed_to_do">完了</string>
     <string name="completed">Completed</string>
     <string name="total">合計</string>
-    <string name="in_progress">In progress</string>
+    <string name="in_progress">進行中</string>
     <string name="completed_text">完了</string>
     <string name="ok">Ok</string>
     <string name="delete_q">本当に削除しますか?</string>
