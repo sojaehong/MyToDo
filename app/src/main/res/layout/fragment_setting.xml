@@ -54,6 +54,24 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:id="@+id/incomplete_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/incomplete_todo"
+                android:textSize="18dp"
+                android:textColor="@color/textColor"
+                android:textAlignment="textStart"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                app:icon="@drawable/ic_navigate_next_black_24dp"
+                app:iconTint="@color/textColor"
+                app:iconGravity="end"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:id="@+id/app_recommend_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

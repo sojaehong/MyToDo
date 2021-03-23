@@ -16,6 +16,8 @@
     <color name="completedTextColor">#59FFFFFF</color>
     <color name="failedBackColor">#59ff2221</color>
     <color name="progressBarBackColor">#34FF2221</color>
+    <color name="redDotColor">#34FF2221</color>
+    <color name="blueDotColor">#341876FB</color>
 
     <color name="classicRed">#E32929</color>
     <color name="lightgrey">#D3D3D3</color>

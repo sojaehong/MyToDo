@@ -20,6 +20,7 @@ import com.ssostudio.mytodo.ToDoActivity;
 import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.decorator.CompletedEventDecorator;
 import com.ssostudio.mytodo.decorator.IncompleteEventDecorator;
+import com.ssostudio.mytodo.decorator.InporcessEventDecorator;
 import com.ssostudio.mytodo.decorator.SaturdayDecorator;
 import com.ssostudio.mytodo.decorator.SundayDecorator;
 import com.ssostudio.mytodo.decorator.TodayDecorator;
@@ -54,7 +55,9 @@ public class CalendarFragment extends Fragment {
                 new SaturdayDecorator(),
                 new TodayDecorator(),
                 new IncompleteEventDecorator(),
-                new CompletedEventDecorator());
+                new CompletedEventDecorator(),
+                new InporcessEventDecorator()
+        );
 
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -70,13 +73,18 @@ public class CalendarFragment extends Fragment {
     public void calendarDecoratorsRefresh(){
         if (view == null)
             return;
-
         materialCalendarView = view.findViewById(R.id.calendarView);
 
-        materialCalendarView.removeDecorator(new IncompleteEventDecorator());
-        materialCalendarView.removeDecorator(new CompletedEventDecorator());
+        materialCalendarView.post(new Runnable() {
+            @Override
+            public void run() {
+                materialCalendarView.removeDecorator(new IncompleteEventDecorator());
+                materialCalendarView.removeDecorator(new CompletedEventDecorator());
+                materialCalendarView.removeDecorator(new InporcessEventDecorator());
 
-        materialCalendarView.addDecorators(new IncompleteEventDecorator(),new CompletedEventDecorator());
+                materialCalendarView.addDecorators(new IncompleteEventDecorator(),new CompletedEventDecorator(), new InporcessEventDecorator());
+            }
+        });
     }
 
     @Override

@@ -27,7 +27,7 @@ public class BucketListActivity extends AppCompatActivity implements View.OnClic
     private TextView statisticsTitleTextView, contentTextView;
     private ProgressBar toDoProgressBar;
     private ToDoListVIewAdapter adapter;
-    private MaterialButton closeButton;
+    private MaterialButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class BucketListActivity extends AppCompatActivity implements View.OnClic
     private void init(){
         setListVIew();
         setAddBtn();
-        setCloseBtn();
+        setBackBtn();
         setStatisticsView();
     }
 
@@ -48,9 +48,9 @@ public class BucketListActivity extends AppCompatActivity implements View.OnClic
         addBtn.setOnClickListener(this);
     }
 
-    private void setCloseBtn(){
-        closeButton = findViewById(R.id.close_button);
-        closeButton.setOnClickListener(this);
+    private void setBackBtn(){
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(this);
     }
 
     private void setListVIew() {
@@ -121,13 +121,13 @@ public class BucketListActivity extends AppCompatActivity implements View.OnClic
             case R.id.add_button:
                 onAddButtonClick();
                 break;
-            case R.id.close_button:
-                onCloseBtnClick();
+            case R.id.back_button:
+                onBackBtnClick();
         }
 
     }
 
-    private void onCloseBtnClick() {
+    private void onBackBtnClick() {
         finish();
     }
 

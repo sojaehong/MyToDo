@@ -9,7 +9,7 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 import com.ssostudio.mytodo.todo.ToDoDataManager;
 import com.ssostudio.mytodo.utility.DateManager;
 
-public class IncompleteEventDecorator implements DayViewDecorator {
+public class InporcessEventDecorator implements DayViewDecorator {
 
     int checks;
 
@@ -19,7 +19,7 @@ public class IncompleteEventDecorator implements DayViewDecorator {
         long timestamp = DateManager.intArrayToTimestamp(date);
         checks =  new ToDoDataManager().decoratorChecks(timestamp);
 
-        if (checks == 3)
+        if (checks == 2)
             return true;
         else
             return false;
@@ -28,6 +28,7 @@ public class IncompleteEventDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(10, Color.argb(95, 255 ,34 ,33)));
+        view.addSpan(new DotSpan(10, Color.argb(95, 0 ,255 ,0)));
     }
+
 }

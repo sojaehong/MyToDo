@@ -169,6 +169,44 @@ public class DBHelperManager extends SQLiteOpenHelper {
         return list;
     }
 
+    public ArrayList<ToDoModel> onIncompleteToDoSelect() {
+
+        ArrayList<ToDoModel> list = new ArrayList<>();
+
+        try {
+
+            _db = getReadableDatabase();
+
+            String sql = "SELECT * FROM todo WHERE todo_type = 0 AND todo_max_count <= todo_now_count";
+
+            Cursor cursor = _db.rawQuery(sql, null);
+
+            while (cursor.moveToNext()) {
+                ToDoModel toDoModel = new ToDoModel();
+                toDoModel.setTodo_id(cursor.getLong(0));
+                toDoModel.setTodo_title(cursor.getString(1));
+                toDoModel.setTodo_max_count(cursor.getLong(2));
+                toDoModel.setTodo_now_count(cursor.getLong(3));
+                toDoModel.setLast_update_date(cursor.getLong(4));
+                toDoModel.setAdd_date(cursor.getLong(5));
+                toDoModel.setStart_date(cursor.getLong(6));
+                toDoModel.setDeadline_date(cursor.getLong(7));
+                toDoModel.setTodo_type(cursor.getInt(8));
+                toDoModel.setTodo_tag(cursor.getString(9));
+                toDoModel.setTodo_note(cursor.getString(10));
+                list.add(toDoModel);
+            }
+
+            _db.close();
+
+            return list;
+
+        } catch (Exception e) {
+            Log.d("databaseError", "todo select error");
+        }
+        return list;
+    }
+
     public ArrayList<ToDoModel> onToDoAllSelect() {
 
         ArrayList<ToDoModel> list = new ArrayList<>();

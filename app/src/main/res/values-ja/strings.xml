@@ -40,4 +40,5 @@
     <string name="settings_other_apps">開発者の他のアプリ</string>
     <string name="settings_app_review">アプリレビューする</string>
     <string name="settings_app_recommend">アプリ推薦する</string>
+    <string name="incomplete_todo">未了ToDo</string>
 </resources>

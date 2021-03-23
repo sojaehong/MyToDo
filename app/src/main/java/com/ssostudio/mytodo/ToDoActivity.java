@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -28,7 +27,7 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
     private int[] _dates;
     private ListView listView;
     private ToDoListVIewAdapter adapter;
-    private MaterialButton closeBtn, beforeBtn, nextBtn;
+    private MaterialButton backBtn, beforeBtn, nextBtn;
     private FloatingActionButton addBtn;
     private TextView statisticsTitleTextView, contentTextView;
     private ProgressBar toDoProgressBar;
@@ -48,7 +47,7 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
 
         setAddBtn();
         setToDoListView();
-        setCloseBtn();
+        setBackBtn();
         setBeforeBtn();
         setNextBtn();
         setSimpleStatisticsVIew();
@@ -137,9 +136,9 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
         beforeBtn.setOnClickListener(this);
     }
 
-    private void setCloseBtn() {
-        closeBtn = findViewById(R.id.close_button);
-        closeBtn.setOnClickListener(this);
+    private void setBackBtn() {
+        backBtn = findViewById(R.id.back_button);
+        backBtn.setOnClickListener(this);
     }
 
     private void setToDoListView() {
@@ -161,8 +160,8 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.close_button:
-                onCloseImageViewClick();
+            case R.id.back_button:
+                onBackBtnClick();
                 break;
             case R.id.before_date_button:
                 onBeforeImageViewClick();
@@ -188,7 +187,7 @@ public class ToDoActivity extends AppCompatActivity implements View.OnClickListe
         dateChange(-1);
     }
 
-    private void onCloseImageViewClick() {
+    private void onBackBtnClick() {
         finish();
     }
 

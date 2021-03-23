@@ -10,7 +10,7 @@ import com.ssostudio.mytodo.todo.ToDoDataManager;
 import com.ssostudio.mytodo.utility.DateManager;
 
 public class CompletedEventDecorator implements DayViewDecorator {
-    boolean[] checks;
+    int checks;
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
@@ -18,15 +18,14 @@ public class CompletedEventDecorator implements DayViewDecorator {
         long timestamp = DateManager.intArrayToTimestamp(date);
         checks =  new ToDoDataManager().decoratorChecks(timestamp);
 
-        if (checks[0] && checks[1])
+        if (checks == 1)
             return true;
         else
             return false;
-
     }
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(10, Color.rgb(24,118,251)));
+        view.addSpan(new DotSpan(10, Color.argb(95,24,118,251)));
     }
 }

@@ -31,6 +31,8 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     private LinearLayout completedLayout, failedLayout;
     private int completedFirst = 0;
 
+    private boolean _isDefault = true;
+
     public ToDoListVIewAdapter(Context context, Map<String, ArrayList<ToDoModel>> listMap) {
         _context = context;
         inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -43,6 +45,16 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         completedFirst = failList.size();
 
         _size = _list.size();
+    }
+
+    public ToDoListVIewAdapter(Context context, ArrayList<ToDoModel> list) {
+        _context = context;
+        inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        _list = new ArrayList<>();
+        _list.addAll(list);
+
+        _isDefault = false;
     }
 
     @Override
@@ -63,7 +75,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if (new ToDoDataManager().toDoCompletedCheck(_list.get(i)) && i == completedFirst) {
+        if (_isDefault && new ToDoDataManager().toDoCompletedCheck(_list.get(i)) && i == completedFirst) {
             view = inflater.inflate(R.layout.to_do_title_item, viewGroup, false);
         } else {
             view = inflater.inflate(R.layout.to_do_item, viewGroup, false);
@@ -82,7 +94,14 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         countTextView.setText(countText);
 
         if (toDoModel.getTodo_type() == 0) {
-            String dateText = " ~ " + DateManager.dateTimeZoneFormat(toDoModel.getDeadline_date());
+            String dateText = "";
+
+            dateText = " ~ " + DateManager.dateTimeZoneFormat(toDoModel.getDeadline_date());
+
+            if (!_isDefault) {
+                dateText = DateManager.dateTimeZoneFormat(toDoModel.getStart_date()) + dateText;
+            }
+
             itemDateTextVIew = view.findViewById(R.id.item_date_text);
             itemDateTextVIew.setText(dateText);
         }
@@ -112,20 +131,12 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         completedLayout = view.findViewById(R.id.completed_ll);
         failedLayout = view.findViewById(R.id.failed_ll);
 
-//        view.setOnTouchListener(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return true;
-//            }
-//        });
-
         completedToDo(nowCount, maxCount, toDoModel);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ToDoSelectDialog(_context).onShowDialog(toDoModel, failedCheck(nowCount,maxCount,toDoModel));
+                new ToDoSelectDialog(_context).onShowDialog(toDoModel, failedCheck(nowCount, maxCount, toDoModel));
             }
         });
 

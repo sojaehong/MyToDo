@@ -68,6 +68,10 @@ public class DBManager {
         ToDoModelList.selectToDoModels = new ToDoDataManager().toDoCompletedSortToMap(list);
     }
 
+    public void selectIncompleteToDo(){
+        ArrayList<ToDoModel> list = _db.onIncompleteToDoSelect();
+    }
+
     public void todoAllSelect() {
         ToDoModelList.allToDoModels = _db.onToDoAllSelect();
     }

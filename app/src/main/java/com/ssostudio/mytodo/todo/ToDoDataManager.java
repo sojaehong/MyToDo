@@ -2,6 +2,7 @@ package com.ssostudio.mytodo.todo;
 
 import com.ssostudio.mytodo.model.ToDoModel;
 import com.ssostudio.mytodo.model.ToDoModelList;
+import com.ssostudio.mytodo.utility.DateManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,22 +62,34 @@ public class ToDoDataManager {
         return false;
     }
 
-    public boolean[] decoratorChecks(long timestamp){
+    boolean isIncomplete = false;
+    boolean isToDoZero = true;
+    public int decoratorChecks(long timestamp){
         ArrayList<ToDoModel> list = ToDoModelList.allToDoModels;
+        long todayStartTimestamp = DateManager.dayStartTimestamp(DateManager.getTimestamp());
 
-        boolean[] checks = {false, false};
+        // 1: 완료, 2: 진행중, 3: 실패한 투두가 존재
+        int checks = 0;
 
-        for (ToDoModel todo:
-                list) {
+        for (ToDoModel todo : list) {
             if (todo.getStart_date() <= timestamp && todo.getDeadline_date() >= timestamp){
-                checks[0] = true;
+                isToDoZero = false;
                 if (todo.getTodo_now_count() < todo.getTodo_max_count()){
-                    return checks;
+                    isIncomplete = true;
+                    if (todo.getDeadline_date() < todayStartTimestamp){
+                        return 3;
+                    }
                 }
             }
         }
 
-        checks[1] = true;
+        if (isToDoZero)
+            return checks;
+
+        if (isIncomplete)
+            checks = 2;
+        else
+            checks = 1;
 
         return checks;
     }
