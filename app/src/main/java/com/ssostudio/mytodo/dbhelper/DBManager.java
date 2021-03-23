@@ -1,10 +1,9 @@
 package com.ssostudio.mytodo.dbhelper;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.ssostudio.mytodo.ToDoActivity;
-import com.ssostudio.mytodo.fragment.BucketListFragment;
+import com.ssostudio.mytodo.BucketListActivity;
 import com.ssostudio.mytodo.fragment.CalendarFragment;
 import com.ssostudio.mytodo.fragment.MonthFragment;
 import com.ssostudio.mytodo.fragment.TodayFragment;
@@ -101,8 +100,8 @@ public class DBManager {
                 new YearFragment().setStatisticsView();
                 break;
             case 2:
-                new BucketListFragment().listRefresh();
-                new BucketListFragment().setStatisticsView();
+                ((BucketListActivity) _context).listRefresh();
+                ((BucketListActivity) _context).setStatisticsView();
                 break;
             case 3:
                 new MonthFragment().listRefresh();

@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.ssostudio.mytodo.R;
-import com.ssostudio.mytodo.fragment.BucketListFragment;
+import com.ssostudio.mytodo.BucketListActivity;
 import com.ssostudio.mytodo.fragment.CalendarFragment;
 import com.ssostudio.mytodo.fragment.MonthFragment;
 import com.ssostudio.mytodo.fragment.SettingFragment;
@@ -38,8 +38,6 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             case 3:
                 return new YearFragment();
             case 4:
-                return new BucketListFragment();
-            case 5:
                 return new SettingFragment();
         }
 
@@ -48,7 +46,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 6;
+        return 5;
     }
 
     @Nullable
@@ -64,8 +62,6 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             case 3:
                 return _context.getString(R.string.year_plan);
             case 4:
-                return _context.getString(R.string.bucket_list);
-            case 5:
                 return _context.getString(R.string.settings);
         }
         return super.getPageTitle(position);
