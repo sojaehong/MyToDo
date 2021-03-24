@@ -9,7 +9,7 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 import com.ssostudio.mytodo.todo.ToDoDataManager;
 import com.ssostudio.mytodo.utility.DateManager;
 
-public class InporcessEventDecorator implements DayViewDecorator {
+public class InprocessEventDecorator implements DayViewDecorator {
 
     int checks;
 
@@ -28,7 +28,7 @@ public class InporcessEventDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(10, Color.argb(95, 0 ,255 ,0)));
+        view.addSpan(new DotSpan(10, Color.argb(95, 0 ,128 ,0)));
     }
 
 }
