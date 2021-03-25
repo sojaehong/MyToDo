@@ -11,14 +11,14 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.ssostudio.mytodo.BucketListActivity;
+import com.ssostudio.mytodo.IncompleteActivity;
 import com.ssostudio.mytodo.R;
-import com.ssostudio.mytodo.ToDoActivity;
 import com.ssostudio.mytodo.utility.OtherApps;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
     private static View view;
     private Context _context;
-    private MaterialButton otherAppsButton, bucketListButton;
+    private MaterialButton otherAppsButton, bucketListButton, incompleteButton;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_setting, container, false);
@@ -35,6 +35,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         bucketListButton = view.findViewById(R.id.bucket_list_button);
         bucketListButton.setOnClickListener(this);
+
+        incompleteButton = view.findViewById(R.id.incomplete_button);
+        incompleteButton.setOnClickListener(this);
     }
 
     @Override
@@ -45,7 +48,16 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.bucket_list_button:
                 onBucketListBtnClick();
+                break;
+            case R.id.incomplete_button:
+                onIncompleteBtnClick();
+                break;
         }
+    }
+
+    private void onIncompleteBtnClick() {
+        Intent intent = new Intent(getActivity(), IncompleteActivity.class);
+        startActivity(intent);
     }
 
     private void onBucketListBtnClick() {

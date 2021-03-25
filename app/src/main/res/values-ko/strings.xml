@@ -41,4 +41,5 @@
     <string name="settings_app_review">앱 리뷰하기</string>
     <string name="settings_app_recommend">앱 추천하기</string>
     <string name="incomplete_todo">미완료 할일</string>
+    <string name="back">이전</string>
 </resources>

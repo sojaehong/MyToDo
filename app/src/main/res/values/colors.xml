@@ -15,6 +15,7 @@
     <color name="completedBackColor">#591876FB</color>
     <color name="completedTextColor">#59FFFFFF</color>
     <color name="failedBackColor">#59ff2221</color>
+    <color name="calendarIconColor">#80ff2221</color>
     <color name="progressBarBackColor">#34FF2221</color>
     <color name="redDotColor">#34FF2221</color>
     <color name="blueDotColor">#341876FB</color>

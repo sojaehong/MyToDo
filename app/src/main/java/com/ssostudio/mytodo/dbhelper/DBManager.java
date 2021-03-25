@@ -1,7 +1,9 @@
 package com.ssostudio.mytodo.dbhelper;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.ssostudio.mytodo.IncompleteActivity;
 import com.ssostudio.mytodo.ToDoActivity;
 import com.ssostudio.mytodo.BucketListActivity;
 import com.ssostudio.mytodo.fragment.CalendarFragment;
@@ -14,6 +16,7 @@ import com.ssostudio.mytodo.todo.ToDoDataManager;
 import com.ssostudio.mytodo.utility.DateManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DBManager {
     DBHelperManager _db;
@@ -70,6 +73,8 @@ public class DBManager {
 
     public void selectIncompleteToDo(){
         ArrayList<ToDoModel> list = _db.onIncompleteToDoSelect();
+        Collections.sort(list);
+        ToDoModelList.incompleteToDoModels = list;
     }
 
     public void todoAllSelect() {
@@ -94,6 +99,8 @@ public class DBManager {
                 if (ToDoActivity.class == _context.getClass()) {
                     ((ToDoActivity) _context).refresh();
                     ((ToDoActivity) _context).setSimpleStatisticsVIew();
+                }else if (IncompleteActivity.class == _context.getClass()){
+                    ((IncompleteActivity) _context).listViewRefresh();
                 } else {
                     new DBManager(_context).todoAllSelect();
                     new CalendarFragment().calendarDecoratorsRefresh();

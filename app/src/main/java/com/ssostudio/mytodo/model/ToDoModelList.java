@@ -11,4 +11,5 @@ public class ToDoModelList {
     public static Map<String,ArrayList<ToDoModel>> monthToDoModels = new HashMap<>();
     public static Map<String,ArrayList<ToDoModel>> bucketListToDoModels = new HashMap<>();
     public static ArrayList<ToDoModel> allToDoModels = new ArrayList<>();
+    public static ArrayList<ToDoModel> incompleteToDoModels = new ArrayList<>();
 }

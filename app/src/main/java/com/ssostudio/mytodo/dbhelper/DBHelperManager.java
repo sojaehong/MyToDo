@@ -177,7 +177,7 @@ public class DBHelperManager extends SQLiteOpenHelper {
 
             _db = getReadableDatabase();
 
-            String sql = "SELECT * FROM todo WHERE todo_type = 0 AND todo_max_count <= todo_now_count";
+            String sql = "SELECT * FROM todo WHERE todo_type = 0 AND todo_max_count > todo_now_count";
 
             Cursor cursor = _db.rawQuery(sql, null);
 

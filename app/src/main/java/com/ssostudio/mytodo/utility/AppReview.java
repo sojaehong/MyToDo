@@ -1,4 +1,4 @@
-package com.ssostudio.mytodo.fragment;
+package com.ssostudio.mytodo.utility;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,12 +1,15 @@
 package com.ssostudio.mytodo.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.button.MaterialButton;
 import com.ssostudio.mytodo.R;
@@ -23,7 +26,6 @@ import java.util.Map;
 public class ToDoListVIewAdapter extends BaseAdapter {
 
     private Context _context;
-    private int _size;
     private LayoutInflater inflater;
     private ArrayList<ToDoModel> _list;
     private TextView toDoTitleTextVIew, countTextView, itemDateTextVIew;
@@ -43,8 +45,6 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         _list.addAll(failList);
         _list.addAll(completedList);
         completedFirst = failList.size();
-
-        _size = _list.size();
     }
 
     public ToDoListVIewAdapter(Context context, ArrayList<ToDoModel> list) {
@@ -59,7 +59,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return _size;
+        return _list.size();
     }
 
     @Override

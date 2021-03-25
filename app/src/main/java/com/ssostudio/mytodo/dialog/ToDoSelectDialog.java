@@ -7,7 +7,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.core.util.Pair;
+import androidx.fragment.app.FragmentManager;
+
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.ssostudio.mytodo.R;
 import com.ssostudio.mytodo.dbhelper.DBManager;
 import com.ssostudio.mytodo.model.ToDoModel;
@@ -17,7 +23,7 @@ public class ToDoSelectDialog implements View.OnClickListener {
     private Context _context;
     private ToDoModel _toDoModel = new ToDoModel();
     private Dialog _dialog;
-    private MaterialButton cancelButton, updateButton, deleteButton, continueButton;
+    private MaterialButton cancelButton, updateButton, deleteButton, continueButton, dateViewButton;
     private TextView dateTextView, contentTextView, countTextView;
     private boolean _isFailed = false;
 
@@ -67,10 +73,13 @@ public class ToDoSelectDialog implements View.OnClickListener {
         countTextView.setText(countText);
 
         continueButton = _dialog.findViewById(R.id.continue_button);
-        if (_isFailed && _toDoModel.getTodo_type() == 0){
+        if (_isFailed && _toDoModel.getTodo_type() == 0) {
             continueButton.setVisibility(View.VISIBLE);
             continueButton.setOnClickListener(this);
         }
+
+        dateViewButton = _dialog.findViewById(R.id.date_view_button);
+        dateViewButton.setOnClickListener(this);
 
         _dialog.show();
 
@@ -97,7 +106,14 @@ public class ToDoSelectDialog implements View.OnClickListener {
             case R.id.continue_button:
                 onContinueBtnClick();
                 break;
+            case R.id.date_view_button:
+                onDateViewBtnClick();
         }
+    }
+
+    private void onDateViewBtnClick() {
+        new DateRangeVIewDialog(_context).onShowDialog(_toDoModel, _isFailed);
+        _dialog.dismiss();
     }
 
     private void onContinueBtnClick() {
