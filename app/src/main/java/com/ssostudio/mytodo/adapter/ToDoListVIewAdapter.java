@@ -28,7 +28,7 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     private Context _context;
     private LayoutInflater inflater;
     private ArrayList<ToDoModel> _list;
-    private TextView toDoTitleTextVIew, countTextView, itemDateTextVIew;
+    private TextView toDoTitleTextVIew, countTextView, itemDateTextVIew, titleTextVIew;
     private MaterialButton upImageBtn, downImageBtn;
     private LinearLayout completedLayout, failedLayout;
     private int completedFirst = 0;
@@ -75,10 +75,27 @@ public class ToDoListVIewAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if (_isDefault && new ToDoDataManager().toDoCompletedCheck(_list.get(i)) && i == completedFirst) {
-            view = inflater.inflate(R.layout.to_do_title_item, viewGroup, false);
+        if (_isDefault) {
+            if (new ToDoDataManager().toDoCompletedCheck(_list.get(i)) && i == completedFirst) {
+                view = inflater.inflate(R.layout.to_do_title_item, viewGroup, false);
+            } else {
+                view = inflater.inflate(R.layout.to_do_item, viewGroup, false);
+            }
         } else {
-            view = inflater.inflate(R.layout.to_do_item, viewGroup, false);
+            if (i == 0) {
+                view = inflater.inflate(R.layout.to_do_title_item, viewGroup, false);
+                setDateTitleTextVIew(view, _list.get(i));
+            } else if (i > 0) {
+                int[] aDates = DateManager.timestampToIntArray(_list.get(i).getStart_date());
+                int[] bDates = DateManager.timestampToIntArray(_list.get(i - 1).getStart_date());
+
+                if (aDates[0] != bDates[0] || aDates[1] != bDates[1] || aDates[2] != bDates[2]) {
+                    view = inflater.inflate(R.layout.to_do_title_item, viewGroup, false);
+                    setDateTitleTextVIew(view, _list.get(i));
+                } else {
+                    view = inflater.inflate(R.layout.to_do_item, viewGroup, false);
+                }
+            }
         }
 
         final ToDoModel toDoModel = _list.get(i);
@@ -97,10 +114,6 @@ public class ToDoListVIewAdapter extends BaseAdapter {
             String dateText = "";
 
             dateText = " ~ " + DateManager.dateTimeZoneFormat(toDoModel.getDeadline_date());
-
-            if (!_isDefault) {
-                dateText = DateManager.dateTimeZoneFormat(toDoModel.getStart_date()) + dateText;
-            }
 
             itemDateTextVIew = view.findViewById(R.id.item_date_text);
             itemDateTextVIew.setText(dateText);
@@ -141,6 +154,12 @@ public class ToDoListVIewAdapter extends BaseAdapter {
         });
 
         return view;
+    }
+
+    private void setDateTitleTextVIew(View view, ToDoModel toDoModel) {
+        String dateText = DateManager.dateTimeZoneFullFormat(toDoModel.getStart_date());
+        titleTextVIew = view.findViewById(R.id.title_text);
+        titleTextVIew.setText(dateText);
     }
 
     private void onClickVibrator() {
