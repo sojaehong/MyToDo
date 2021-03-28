@@ -42,4 +42,6 @@
     <string name="settings_app_recommend">Recommend this app</string>
     <string name="incomplete_todo">Incomplete to-do</string>
     <string name="back">back</string>
+    <string name="main_ad_application_id">ca-app-pub-5743192063444801~1120816224</string>
+    <string name="main_banner_ad_unit_id">ca-app-pub-5743192063444801/8320649392</string>
 </resources>

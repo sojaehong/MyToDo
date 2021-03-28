@@ -100,8 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setAdMob() {
-        //        if (isPremium || isFree)
-        //            return;
+        if (isPremium || isFree)
+            return;
+
         setAdMobLoad();
         setAdMobUI();
     }
@@ -126,14 +127,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mAdView = new AdView(this);
         // banner test
-        mAdView.setAdUnitId(getString(R.string.test_banner_ad_unit_id));
+//        mAdView.setAdUnitId(getString(R.string.test_banner_ad_unit_id));
+        mAdView.setAdUnitId(getString(R.string.main_banner_ad_unit_id));
 
         adContainerView.addView(mAdView);
 
         // Ad Test Device setting
-        MobileAds.setRequestConfiguration(
-                new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("BDEFD70AD95EF10E88425F412EEC574E"))
-                        .build());
+//        MobileAds.setRequestConfiguration(
+//                new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("BDEFD70AD95EF10E88425F412EEC574E"))
+//                        .build());
         // 앱 등록시 제거 필요
 
         AdRequest adRequest = new AdRequest.Builder().build();

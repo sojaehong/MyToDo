@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">내 할일</string>
+    <string name="app_name">내 할 일</string>
     <string name="test_ad_application_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="test_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="test_reward_ad_unit_id">ca-app-pub-3940256099942544/5224354917</string>
@@ -42,4 +42,6 @@
     <string name="settings_app_recommend">앱 추천하기</string>
     <string name="incomplete_todo">미완료 할일</string>
     <string name="back">이전</string>
+    <string name="main_ad_application_id">ca-app-pub-5743192063444801~1120816224</string>
+    <string name="main_banner_ad_unit_id">ca-app-pub-5743192063444801/8320649392</string>
 </resources>
